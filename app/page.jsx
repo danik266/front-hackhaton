@@ -52,7 +52,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative flex h-screen overflow-hidden">
+    <div className="relative flex h-screen">
       {/* Красивый иридисцентный фон */}
       <div className="absolute inset-0 -z-10">
         <div
@@ -103,6 +103,25 @@ export default function App() {
       `}</style>
 
       <div className="flex h-full w-full relative">
+        {/* Боковая панель с анимацией — теперь fixed */}
+        <aside
+          className={`
+            fixed inset-y-0 left-0 z-40 w-84 bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col gap-6 
+            transition-all duration-700 ease-in-out
+            ${
+              isSidebarOpen
+                ? "translate-x-0 opacity-100"
+                : "-translate-x-full opacity-0"
+            }
+            ${isLoaded ? "" : "-translate-x-20 opacity-0"}
+          `}
+        >
+          <h1 className="text-2xl font-bold text-[#1b5e20]">AI Pharmacist</h1>
+          <button className="text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl hover:bg-white/50 transition-all hover:scale-[1.02] border border-white/20">
+            + Новый чат
+          </button>
+        </aside>
+
         {/* Кнопка скрытия/показа сайдбара — всегда видна */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -128,27 +147,12 @@ export default function App() {
           </svg>
         </button>
 
-        {/* Боковая панель с анимацией */}
-        <aside
-          className={`
-            w-84 bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col gap-6 
-            transition-all duration-700 ease-in-out absolute md:relative z-40 h-full
-            ${
-              isSidebarOpen
-                ? "translate-x-0 opacity-100"
-                : "-translate-x-full opacity-0"
-            }
-            ${isLoaded ? "" : "-translate-x-20 opacity-0"}
-          `}
+        {/* Основная область чата — растягивается, центрирует контент и сдвигается динамически */}
+        <div
+          className={`text-[#1b5e20]/70 flex-1 flex flex-col transition-all duration-700 ease-in-out overflow-hidden ${
+            isSidebarOpen ? "ml-84" : "ml-0"
+          }`}
         >
-          <h1 className="text-2xl font-bold text-[#1b5e20]">AI Pharmacist</h1>
-          <button className="text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl hover:bg-white/50 transition-all hover:scale-[1.02] border border-white/20">
-            + Новый чат
-          </button>
-        </aside>
-
-        {/* Основная область чата — растягивается и центрирует контент */}
-        <div className="flex-1 flex flex-col transition-all duration-700 ease-in-out">
           {/* Сообщения */}
           <div className="flex-1 overflow-y-auto px-8 py-6">
             {messages.length === 0 ? (
@@ -215,7 +219,7 @@ export default function App() {
 
                 {loading && (
                   <div className="flex justify-start">
-                    <div className="bg-white/40 text-[#1b5e20] px-7 py-5 rounded-3xl backdrop-blur-md border border-white/30">
+                    <div className="shadow-xl  text-[#1b5e20] px-7 py-5 rounded-3xl backdrop-blur-md border border-white/30">
                       <p className="text-lg">Загрузка...</p>
                     </div>
                   </div>
