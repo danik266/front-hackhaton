@@ -341,7 +341,7 @@ function App() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                                 src: "/free-icon-send-button-12439325 (1).png",
                                                 alt: "Отправить",
-                                                className: "jsx-1b08f635a92f5ae7" + " " + "w-8 h-8 brightness-0 invert opacity-70 hue-rotate-120deg"
+                                                className: "jsx-1b08f635a92f5ae7" + " " + "w-8 h-8 brightness-0 opacity-80"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
                                                 lineNumber: 171,

@@ -1,302 +1,7 @@
-[00:00:01.260] Server  LOG      ✓ Ready in 810ms
-[00:00:07.215] Server  LOG      ○ Compiling / ...
-[00:00:08.626] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:08.757] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <RenderFromTemplateContext>
-      <ScrollAndFocusHandler segmentPath={[...]}>
-        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
-          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
-            <LoadingBoundary name="/" loading={null}>
-              <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
-                <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
-                  <RedirectBoundary>
-                    <RedirectErrorBoundary router={{...}}>
-                      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
-                        <SegmentViewNode type="page" pagePath="page.jsx">
-                          <SegmentTrieNode>
-                          <ClientPageRoot Component={function App} serverProvidedParams={{...}}>
-                            <App params={Promise} searchParams={Promise}>
-                              <div
-+                               className="jsx-1b08f635a92f5ae7 relative flex h-screen overflow-hidden"
--                               className="jsx-e2e5978851b58302 relative flex h-screen overflow-hidden"
-                              >
-                                <div
-+                                 className="jsx-1b08f635a92f5ae7 absolute inset-0 -z-10"
--                                 className="jsx-e2e5978851b58302 absolute inset-0 -z-10"
-                                >
-                                  <div
-                                    style={{background:"radial-gra...",backgroundSize:"200% 200%",animation:"iridescent..."}}
-+                                   className="jsx-1b08f635a92f5ae7 w-full h-full"
--                                   className="jsx-e2e5978851b58302 w-full h-full"
-                                  >
-                                <JSXStyle>
-                                <div
-+                                 className="jsx-1b08f635a92f5ae7 flex h-full w-full relative"
--                                 className="jsx-e2e5978851b58302 flex h-full w-full relative"
-                                >
-                                  <button
-                                    onClick={function onClick}
-                                    style={{transform:"translateX..."}}
-+                                   className="jsx-1b08f635a92f5ae7 absolute left-0 top-6 z-50 bg-white/40 backdrop-bl..."
--                                   className="jsx-e2e5978851b58302 absolute left-0 top-6 z-50 bg-white/40 backdrop-bl..."
-                                  >
-                                    <svg
-                                      fill="none"
-                                      stroke="currentColor"
-                                      viewBox="0 0 24 24"
-+                                     className="jsx-1b08f635a92f5ae7 w-6 h-6 text-[#1b5e20] transition-transform rota..."
--                                     className="jsx-e2e5978851b58302 w-6 h-6 text-[#1b5e20] transition-transform rota..."
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M15 19l-7-7 7-7"
-+                                       className="jsx-1b08f635a92f5ae7"
--                                       className="jsx-e2e5978851b58302"
-                                      >
-                                  <aside
-+                                   className={"jsx-1b08f635a92f5ae7 \n            w-84 bg-white/40 backdrop-blur-xl ..."}
--                                   className={"jsx-e2e5978851b58302 \n            w-84 bg-white/40 backdrop-blur-xl ..."}
-                                  >
-                                    <h1
-+                                     className="jsx-1b08f635a92f5ae7 text-2xl font-bold text-[#1b5e20]"
--                                     className="jsx-e2e5978851b58302 text-2xl font-bold text-[#1b5e20]"
-                                    >
-+                                     AI Pharmacist
-                                    <button
-+                                     className="jsx-1b08f635a92f5ae7 text-left text-[#1b5e20]/70 bg-white/30 backdrop..."
--                                     className="jsx-e2e5978851b58302 text-left text-[#1b5e20]/70 bg-white/30 backdrop..."
-                                    >
-+                                     + Новый чат
-                                  <div
-+                                   className="jsx-1b08f635a92f5ae7 flex-1 flex flex-col transition-all duration-700 e..."
--                                   className="jsx-e2e5978851b58302 flex-1 flex flex-col transition-all duration-700 e..."
-                                  >
-                                    <div
-+                                     className="jsx-1b08f635a92f5ae7 flex-1 overflow-y-auto px-8 py-6"
--                                     className="jsx-e2e5978851b58302 flex-1 overflow-y-auto px-8 py-6"
-                                    >
-                                      <div
-+                                       className="jsx-1b08f635a92f5ae7 h-full flex items-center justify-center"
--                                       className="jsx-e2e5978851b58302 h-full flex items-center justify-center"
-                                      >
-                                        <div
-+                                         className="jsx-1b08f635a92f5ae7 text-center max-w-2xl mx-auto"
--                                         className="jsx-e2e5978851b58302 text-center max-w-2xl mx-auto"
-                                        >
-                                          <h2
-+                                           className="jsx-1b08f635a92f5ae7 text-4xl font-light text-[#1b5e20]/80 mb-4"
--                                           className="jsx-e2e5978851b58302 text-4xl font-light text-[#1b5e20]/80 mb-4"
-                                          >
-+                                           Вас приветствует AI Pharmacist!
-                                          <p
-+                                           className="jsx-1b08f635a92f5ae7 text-lg text-[#1b5e20]/60"
--                                           className="jsx-e2e5978851b58302 text-lg text-[#1b5e20]/60"
-                                          >
-+                                           Задайте вопрос о лекарствах, их составе, взаимодействии или применении
-                                    <div
-+                                     className="jsx-1b08f635a92f5ae7 p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d..."
--                                     className="jsx-e2e5978851b58302 p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d..."
-                                    >
-                                      <form
-                                        onSubmit={function handleSubmit}
-+                                       className="jsx-1b08f635a92f5ae7 mx-auto flex gap-4 transition-all duration-700..."
--                                       className="jsx-e2e5978851b58302 mx-auto flex gap-4 transition-all duration-700..."
-                                      >
-                                        <input
-                                          type="text"
-                                          value=""
-                                          onChange={function onChange}
-                                          placeholder="Узнать у AI Pharmacist..."
-                                          disabled={false}
-+                                         className="jsx-1b08f635a92f5ae7 text-[#1b5e20] flex-1 bg-white/30 backdrop-b..."
--                                         className="jsx-e2e5978851b58302 text-[#1b5e20] flex-1 bg-white/30 backdrop-b..."
-                                        >
-                                        <button
-                                          type="submit"
-                                          disabled={true}
-+                                         className="jsx-1b08f635a92f5ae7 bg-white/40 backdrop-blur-xl p-5 rounded-ful..."
--                                         className="jsx-e2e5978851b58302 bg-white/40 backdrop-blur-xl p-5 rounded-ful..."
-                                        >
-                                          <img
-                                            src="/free-icon-send-button-12439325 (1).png"
-                                            alt="Отправить"
-+                                           className="jsx-1b08f635a92f5ae7 w-8 h-8 brightness-0 invert opacity-70 hue..."
--                                           className="jsx-e2e5978851b58302 w-8 h-8 brightness-0 invert opacity-70 hue..."
-                                          >
-                        ...
-                      ...
-          ...
-
-[00:01:01.822] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:01.948] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <RenderFromTemplateContext>
-      <ScrollAndFocusHandler segmentPath={[...]}>
-        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
-          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
-            <LoadingBoundary name="/" loading={null}>
-              <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
-                <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
-                  <RedirectBoundary>
-                    <RedirectErrorBoundary router={{...}}>
-                      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
-                        <SegmentViewNode type="page" pagePath="page.jsx">
-                          <SegmentTrieNode>
-                          <ClientPageRoot Component={function App} serverProvidedParams={{...}}>
-                            <App params={Promise} searchParams={Promise}>
-                              <div
-+                               className="jsx-1b08f635a92f5ae7 relative flex h-screen overflow-hidden"
--                               className="jsx-e2e5978851b58302 relative flex h-screen overflow-hidden"
-                              >
-                                <div
-+                                 className="jsx-1b08f635a92f5ae7 absolute inset-0 -z-10"
--                                 className="jsx-e2e5978851b58302 absolute inset-0 -z-10"
-                                >
-                                  <div
-                                    style={{background:"radial-gra...",backgroundSize:"200% 200%",animation:"iridescent..."}}
-+                                   className="jsx-1b08f635a92f5ae7 w-full h-full"
--                                   className="jsx-e2e5978851b58302 w-full h-full"
-                                  >
-                                <JSXStyle>
-                                <div
-+                                 className="jsx-1b08f635a92f5ae7 flex h-full w-full relative"
--                                 className="jsx-e2e5978851b58302 flex h-full w-full relative"
-                                >
-                                  <button
-                                    onClick={function onClick}
-                                    style={{transform:"translateX..."}}
-+                                   className="jsx-1b08f635a92f5ae7 absolute left-0 top-6 z-50 bg-white/40 backdrop-bl..."
--                                   className="jsx-e2e5978851b58302 absolute left-0 top-6 z-50 bg-white/40 backdrop-bl..."
-                                  >
-                                    <svg
-                                      fill="none"
-                                      stroke="currentColor"
-                                      viewBox="0 0 24 24"
-+                                     className="jsx-1b08f635a92f5ae7 w-6 h-6 text-[#1b5e20] transition-transform rota..."
--                                     className="jsx-e2e5978851b58302 w-6 h-6 text-[#1b5e20] transition-transform rota..."
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M15 19l-7-7 7-7"
-+                                       className="jsx-1b08f635a92f5ae7"
--                                       className="jsx-e2e5978851b58302"
-                                      >
-                                  <aside
-+                                   className={"jsx-1b08f635a92f5ae7 \n            w-84 bg-white/40 backdrop-blur-xl ..."}
--                                   className={"jsx-e2e5978851b58302 \n            w-84 bg-white/40 backdrop-blur-xl ..."}
-                                  >
-                                    <h1
-+                                     className="jsx-1b08f635a92f5ae7 text-2xl font-bold text-[#1b5e20]"
--                                     className="jsx-e2e5978851b58302 text-2xl font-bold text-[#1b5e20]"
-                                    >
-+                                     AI Pharmacist
-                                    <button
-+                                     className="jsx-1b08f635a92f5ae7 text-left text-[#1b5e20]/70 bg-white/30 backdrop..."
--                                     className="jsx-e2e5978851b58302 text-left text-[#1b5e20]/70 bg-white/30 backdrop..."
-                                    >
-+                                     + Новый чат
-                                  <div
-+                                   className="jsx-1b08f635a92f5ae7 flex-1 flex flex-col transition-all duration-700 e..."
--                                   className="jsx-e2e5978851b58302 flex-1 flex flex-col transition-all duration-700 e..."
-                                  >
-                                    <div
-+                                     className="jsx-1b08f635a92f5ae7 flex-1 overflow-y-auto px-8 py-6"
--                                     className="jsx-e2e5978851b58302 flex-1 overflow-y-auto px-8 py-6"
-                                    >
-                                      <div
-+                                       className="jsx-1b08f635a92f5ae7 h-full flex items-center justify-center"
--                                       className="jsx-e2e5978851b58302 h-full flex items-center justify-center"
-                                      >
-                                        <div
-+                                         className="jsx-1b08f635a92f5ae7 text-center max-w-2xl mx-auto"
--                                         className="jsx-e2e5978851b58302 text-center max-w-2xl mx-auto"
-                                        >
-                                          <h2
-+                                           className="jsx-1b08f635a92f5ae7 text-4xl font-light text-[#1b5e20]/80 mb-4"
--                                           className="jsx-e2e5978851b58302 text-4xl font-light text-[#1b5e20]/80 mb-4"
-                                          >
-+                                           Вас приветствует AI Pharmacist!
-                                          <p
-+                                           className="jsx-1b08f635a92f5ae7 text-lg text-[#1b5e20]/60"
--                                           className="jsx-e2e5978851b58302 text-lg text-[#1b5e20]/60"
-                                          >
-+                                           Задайте вопрос о лекарствах, их составе, взаимодействии или применении
-                                    <div
-+                                     className="jsx-1b08f635a92f5ae7 p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d..."
--                                     className="jsx-e2e5978851b58302 p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d..."
-                                    >
-                                      <form
-                                        onSubmit={function handleSubmit}
-+                                       className="jsx-1b08f635a92f5ae7 mx-auto flex gap-4 transition-all duration-700..."
--                                       className="jsx-e2e5978851b58302 mx-auto flex gap-4 transition-all duration-700..."
-                                      >
-                                        <input
-                                          type="text"
-                                          value=""
-                                          onChange={function onChange}
-                                          placeholder="Узнать у AI Pharmacist..."
-                                          disabled={false}
-+                                         className="jsx-1b08f635a92f5ae7 text-[#1b5e20] flex-1 bg-white/30 backdrop-b..."
--                                         className="jsx-e2e5978851b58302 text-[#1b5e20] flex-1 bg-white/30 backdrop-b..."
-                                        >
-                                        <button
-                                          type="submit"
-                                          disabled={true}
-+                                         className="jsx-1b08f635a92f5ae7 bg-white/40 backdrop-blur-xl p-5 rounded-ful..."
--                                         className="jsx-e2e5978851b58302 bg-white/40 backdrop-blur-xl p-5 rounded-ful..."
-                                        >
-                                          <img
-                                            src="/free-icon-send-button-12439325 (1).png"
-                                            alt="Отправить"
-+                                           className="jsx-1b08f635a92f5ae7 w-8 h-8 brightness-0 invert opacity-70 hue..."
--                                           className="jsx-e2e5978851b58302 w-8 h-8 brightness-0 invert opacity-70 hue..."
-                                          >
-                        ...
-                      ...
-          ...
-
-[00:03:52.165] Server  LOG      ✓ Compiled in 66ms
-[00:04:06.337] Server  LOG      ✓ Compiled in 151ms
-[00:05:05.912] Server  LOG      ✓ Compiled in 32ms
-[00:05:41.709] Server  LOG      ✓ Compiled in 32ms
-[00:05:47.894] Server  LOG      ✓ Compiled in 122ms
-[00:06:31.866] Server  LOG      ✓ Compiled in 30ms
-[00:06:40.918] Server  LOG      ✓ Compiled in 28ms
-[00:06:45.893] Server  LOG      ✓ Compiled in 44ms
-[00:06:50.200] Server  LOG      ✓ Compiled in 39ms
-[00:06:54.552] Server  LOG      ✓ Compiled in 54ms
-[00:06:58.350] Server  LOG      ✓ Compiled in 69ms
-[00:06:59.788] Server  LOG      ✓ Compiled in 59ms
-[00:07:03.732] Server  LOG      ✓ Compiled in 40ms
-[00:07:40.108] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:07:40.223] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:00:01.044] Server  LOG      ✓ Ready in 600ms
+[00:00:04.088] Server  LOG      ○ Compiling / ...
+[00:00:05.725] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:05.859] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -436,12 +141,9 @@ It can also happen if the client has a browser extension installed which messes 
                       ...
           ...
 
-[00:08:38.044] Server  LOG      ✓ Compiled in 42ms
-[00:08:43.955] Server  LOG      ✓ Compiled in 45ms
-[00:08:47.211] Server  LOG      ✓ Compiled in 25ms
-[00:09:42.042] Server  LOG      ✓ Compiled in 52ms
-[00:10:32.566] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:10:32.679] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:00:06.068] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:06.100] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:06.780] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -581,8 +283,7 @@ It can also happen if the client has a browser extension installed which messes 
                       ...
           ...
 
-[00:11:31.782] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:11:31.909] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:00:06.781] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -722,3 +423,147 @@ It can also happen if the client has a browser extension installed which messes 
                       ...
           ...
 
+[00:12:50.179] Server  LOG      ✓ Compiled in 95ms
+[00:13:31.399] Server  LOG      ✓ Compiled in 72ms
+[00:13:42.271] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:42.391] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+                <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                  <RedirectBoundary>
+                    <RedirectErrorBoundary router={{...}}>
+                      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                        <SegmentViewNode type="page" pagePath="page.jsx">
+                          <SegmentTrieNode>
+                          <ClientPageRoot Component={function App} serverProvidedParams={{...}}>
+                            <App params={Promise} searchParams={Promise}>
+                              <div
++                               className="jsx-1b08f635a92f5ae7 relative flex h-screen"
+-                               className="jsx-e2e5978851b58302 relative flex h-screen"
+                              >
+                                <div
++                                 className="jsx-1b08f635a92f5ae7 absolute inset-0 -z-10"
+-                                 className="jsx-e2e5978851b58302 absolute inset-0 -z-10"
+                                >
+                                  <div
+                                    style={{background:"radial-gra...",backgroundSize:"200% 200%",animation:"iridescent..."}}
++                                   className="jsx-1b08f635a92f5ae7 w-full h-full"
+-                                   className="jsx-e2e5978851b58302 w-full h-full"
+                                  >
+                                <JSXStyle>
+                                <div
++                                 className="jsx-1b08f635a92f5ae7 flex h-full w-full relative"
+-                                 className="jsx-e2e5978851b58302 flex h-full w-full relative"
+                                >
+                                  <aside
++                                   className={"jsx-1b08f635a92f5ae7 \n            fixed inset-y-0 left-0 z-40 w-84 b..."}
+-                                   className={"jsx-e2e5978851b58302 \n            fixed inset-y-0 left-0 z-40 w-84 b..."}
+                                  >
+                                    <h1
++                                     className="jsx-1b08f635a92f5ae7 text-2xl font-bold text-[#1b5e20]"
+-                                     className="jsx-e2e5978851b58302 text-2xl font-bold text-[#1b5e20]"
+                                    >
++                                     AI Pharmacist
+                                    <button
++                                     className="jsx-1b08f635a92f5ae7 text-left text-[#1b5e20]/70 bg-white/30 backdrop..."
+-                                     className="jsx-e2e5978851b58302 text-left text-[#1b5e20]/70 bg-white/30 backdrop..."
+                                    >
++                                     + Новый чат
+                                  <button
+                                    onClick={function onClick}
+                                    style={{transform:"translateX..."}}
++                                   className="jsx-1b08f635a92f5ae7 absolute left-0 top-6 z-50 bg-white/40 backdrop-bl..."
+-                                   className="jsx-e2e5978851b58302 absolute left-0 top-6 z-50 bg-white/40 backdrop-bl..."
+                                  >
+                                    <svg
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
++                                     className="jsx-1b08f635a92f5ae7 w-6 h-6 text-[#1b5e20] transition-transform rota..."
+-                                     className="jsx-e2e5978851b58302 w-6 h-6 text-[#1b5e20] transition-transform rota..."
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M15 19l-7-7 7-7"
++                                       className="jsx-1b08f635a92f5ae7"
+-                                       className="jsx-e2e5978851b58302"
+                                      >
+                                  <div
++                                   className="jsx-1b08f635a92f5ae7 text-[#1b5e20]/70 flex-1 flex flex-col transition-..."
+-                                   className="jsx-e2e5978851b58302 text-[#1b5e20]/70 flex-1 flex flex-col transition-..."
+                                  >
+                                    <div
++                                     className="jsx-1b08f635a92f5ae7 flex-1 overflow-y-auto px-8 py-6"
+-                                     className="jsx-e2e5978851b58302 flex-1 overflow-y-auto px-8 py-6"
+                                    >
+                                      <div
++                                       className="jsx-1b08f635a92f5ae7 h-full flex items-center justify-center"
+-                                       className="jsx-e2e5978851b58302 h-full flex items-center justify-center"
+                                      >
+                                        <div
++                                         className="jsx-1b08f635a92f5ae7 text-center max-w-2xl mx-auto"
+-                                         className="jsx-e2e5978851b58302 text-center max-w-2xl mx-auto"
+                                        >
+                                          <h2
++                                           className="jsx-1b08f635a92f5ae7 text-4xl font-light text-[#1b5e20]/80 mb-4"
+-                                           className="jsx-e2e5978851b58302 text-4xl font-light text-[#1b5e20]/80 mb-4"
+                                          >
++                                           Вас приветствует AI Pharmacist!
+                                          <p
++                                           className="jsx-1b08f635a92f5ae7 text-lg text-[#1b5e20]/60"
+-                                           className="jsx-e2e5978851b58302 text-lg text-[#1b5e20]/60"
+                                          >
++                                           Задайте вопрос о лекарствах, их составе, взаимодействии или применении
+                                    <div
++                                     className="jsx-1b08f635a92f5ae7 p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d..."
+-                                     className="jsx-e2e5978851b58302 p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d..."
+                                    >
+                                      <form
+                                        onSubmit={function handleSubmit}
++                                       className="jsx-1b08f635a92f5ae7 mx-auto flex gap-4 transition-all duration-700..."
+-                                       className="jsx-e2e5978851b58302 mx-auto flex gap-4 transition-all duration-700..."
+                                      >
+                                        <input
+                                          type="text"
+                                          value=""
+                                          onChange={function onChange}
+                                          placeholder="Узнать у AI Pharmacist..."
+                                          disabled={false}
++                                         className="jsx-1b08f635a92f5ae7 text-[#1b5e20] flex-1 bg-white/30 backdrop-b..."
+-                                         className="jsx-e2e5978851b58302 text-[#1b5e20] flex-1 bg-white/30 backdrop-b..."
+                                        >
+                                        <button
+                                          type="submit"
+                                          disabled={true}
++                                         className="jsx-1b08f635a92f5ae7 bg-white/40 backdrop-blur-xl p-5 rounded-ful..."
+-                                         className="jsx-e2e5978851b58302 bg-white/40 backdrop-blur-xl p-5 rounded-ful..."
+                                        >
+                                          <img
+                                            src="/free-icon-send-button-12439325 (1).png"
+                                            alt="Отправить"
++                                           className="jsx-1b08f635a92f5ae7 w-8 h-8 filter invert sepia-100 saturate-[..."
+-                                           className="jsx-e2e5978851b58302 w-8 h-8 filter invert sepia-100 saturate-[..."
+                                          >
+                        ...
+                      ...
+          ...
+
+[00:14:13.674] Server  LOG      ✓ Compiled in 53ms

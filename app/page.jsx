@@ -253,7 +253,7 @@ export default function App() {
                 <img
                   src="/free-icon-send-button-12439325 (1).png"
                   alt="Отправить"
-                  className="w-8 h-8 brightness-0 invert opacity-70 hue-rotate-120deg"
+                  className="w-8 h-8 brightness-0 opacity-80"
                 />
               </button>
             </form>
