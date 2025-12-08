@@ -1,4 +1,28 @@
-[00:00:01.234] Server  LOG      ✓ Ready in 837ms
-[00:00:04.288] Server  LOG      ○ Compiling / ...
-[00:00:06.517] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:06.798] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:00.872] Server  LOG      ✓ Ready in 539ms
+[00:00:03.890] Server  LOG      ○ Compiling / ...
+[00:00:06.559] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:47.609] Server  LOG      ✓ Compiled in 30ms
+[00:02:48.401] Browser ERROR   ./hackhaton-devfest/frontend/app/page.jsx:335:22
+Parsing ecmascript source code failed
+  333 | </div>
+  334 |
+> 335 |                     )}
+      |                      ^
+  336 |                   </div>
+  337 |                 </div>
+  338 |               ))}
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./hackhaton-devfest/frontend/app/page.jsx [Client Component Browser]
+    ./hackhaton-devfest/frontend/app/page.jsx [Server Component]
+
+  Client Component SSR:
+    ./hackhaton-devfest/frontend/app/page.jsx [Client Component SSR]
+    ./hackhaton-devfest/frontend/app/page.jsx [Server Component]
+[00:03:26.435] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:03:51.206] Server  LOG      ✓ Compiled in 78ms
+[00:03:55.095] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:11.657] Server  LOG      ✓ Compiled in 57ms

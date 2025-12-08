@@ -309,32 +309,30 @@ export default function App() {
                     </p>
                     {msg.sources?.length > 0 && (
                       <div
-                        className="mt-5 pt-5 border-t"
-                        style={{
-                          borderColor: isLight ? "#ffffff33" : "#2e2e2e",
-                        }}
-                      >
-                        <p
-                          className="text-sm font-medium mb-3"
-                          style={{ color: isLight ? "#1b5e20" : "#c8e6c980" }}
-                        >
-                          Источники:
-                        </p>
-                        <div className="space-y-2">
-                          {msg.sources.map((src, idx) => (
-                            <a
-                              key={idx}
-                              href={src.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block text-sm underline"
-                              style={{ color: isLight ? "#1b5e20" : "#c8e6c9" }}
-                            >
-                              {src.name}
-                            </a>
-                          ))}
-                        </div>
-                      </div>
+  className="mt-5 pt-5 border-t"
+  style={{
+    borderColor: isLight ? "#ffffff33" : "#2e2e2e",
+  }}
+>
+  <p
+    className="text-sm font-medium mb-3"
+    style={{ color: isLight ? "#1b5e20" : "#c8e6c980" }}
+  >
+    Источники:
+  </p>
+  <div className="space-y-2">
+    <a
+      href="https://ru.wikipedia.org"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block text-sm underline"
+      style={{ color: isLight ? "#1b5e20" : "#c8e6c9" }}
+    >
+      Википедия
+    </a>
+  </div>
+</div>
+
                     )}
                   </div>
                 </div>
