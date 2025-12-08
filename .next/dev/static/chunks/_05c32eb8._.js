@@ -45,10 +45,9 @@ function App() {
         loading
     ]);
     // -------------------------
-    // ➤ СОЗДАТЬ НОВЫЙ ЧАТ
+    // ➤ УДАЛЕНИЕ ЧАТА
     // -------------------------
     const deleteChat = (id)=>{
-        // если удаляем активный — переключаемся на первый оставшийся
         setChats((prev)=>{
             const updated = {
                 ...prev
@@ -60,7 +59,14 @@ function App() {
             return updated;
         });
     };
+    // -------------------------
+    // ➤ СОЗДАТЬ НОВЫЙ ЧАТ (БЛОКИРОВКА ЕСЛИ ПУСТОЙ)
+    // -------------------------
     const createNewChat = ()=>{
+        if (chats[activeChat].messages.length === 0) {
+            alert("Сначала отправьте сообщение в текущий чат!");
+            return;
+        }
         const id_0 = Date.now();
         setChats((prev_0)=>({
                 ...prev_0,
@@ -79,7 +85,6 @@ function App() {
         if (!query.trim()) return;
         const userMessage = query.trim();
         setQuery("");
-        // Добавляем сообщение пользователя
         setChats((prev_1)=>({
                 ...prev_1,
                 [activeChat]: {
@@ -99,7 +104,6 @@ function App() {
             const response = await fetch(`http://localhost:8000/ask?query=${encodeURIComponent(userMessage)}`);
             if (!response.ok) throw new Error("Ошибка сервера");
             const result = await response.json();
-            // Добавляем ответ ассистента
             setChats((prev_3)=>({
                     ...prev_3,
                     [activeChat]: {
@@ -147,12 +151,12 @@ function App() {
                     className: "jsx-915e81e316328a4b" + " " + "w-full h-full"
                 }, void 0, false, {
                     fileName: "[project]/app/page.jsx",
-                    lineNumber: 113,
+                    lineNumber: 116,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 112,
+                lineNumber: 115,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -175,25 +179,29 @@ function App() {
                                 children: "AI Pharmacist"
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
-                                lineNumber: 163,
+                                lineNumber: 166,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: createNewChat,
-                                className: "jsx-915e81e316328a4b" + " " + "text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl hover:bg-white/50 transition-all hover:scale-[1.02] border border-white/20",
+                                disabled: chats[activeChat].messages.length === 0,
+                                className: "jsx-915e81e316328a4b" + " " + `
+              text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl 
+              border border-white/20 transition-all
+              ${chats[activeChat].messages.length === 0 ? "opacity-40 cursor-not-allowed" : "hover:bg-white/50"}
+            `,
                                 children: "+ Новый чат"
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
-                                lineNumber: 166,
+                                lineNumber: 169,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "jsx-915e81e316328a4b" + " " + "space-y-3 overflow-y-auto pr-2",
                                 children: Object.entries(chats).map(([id_1, chat])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-915e81e316328a4b" + " " + `
-      w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all group
-      ${Number(id_1) === activeChat ? "bg-white/60 text-[#1b5e20] font-semibold" : "bg-white/20 text-[#1b5e20]/70 hover:bg-white/40"}
-    `,
+                                        className: "jsx-915e81e316328a4b" + " " + `w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all group
+                  ${Number(id_1) === activeChat ? "bg-white/60 text-[#1b5e20] font-semibold" : "bg-white/20 text-[#1b5e20]/70 hover:bg-white/40"}
+                `,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 onClick: ()=>setActiveChat(Number(id_1)),
@@ -201,33 +209,33 @@ function App() {
                                                 children: chat.title
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 176,
+                                                lineNumber: 182,
                                                 columnNumber: 17
                                             }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            Number(id_1) !== 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 onClick: ()=>deleteChat(Number(id_1)),
                                                 className: "jsx-915e81e316328a4b" + " " + "opacity-0 group-hover:opacity-100 ml-3 text-red-500 hover:text-red-700 transition",
                                                 children: "✕"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 181,
-                                                columnNumber: 17
+                                                lineNumber: 186,
+                                                columnNumber: 40
                                             }, this)
                                         ]
                                     }, id_1, true, {
                                         fileName: "[project]/app/page.jsx",
-                                        lineNumber: 172,
+                                        lineNumber: 179,
                                         columnNumber: 58
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
-                                lineNumber: 171,
+                                lineNumber: 178,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 157,
+                        lineNumber: 160,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -235,7 +243,7 @@ function App() {
                         style: {
                             transform: isSidebarOpen ? "translateX(336px)" : "translateX(0)"
                         },
-                        className: "jsx-915e81e316328a4b" + " " + "absolute left-0 top-6 z-50 bg-white/40 backdrop-blur-xl p-3 rounded-r-2xl shadow-xl border border-white/30 shadow-2xl hover:bg-white/60 transition-all",
+                        className: "jsx-915e81e316328a4b" + " " + "absolute left-0 top-6 z-50 bg-white/40 backdrop-blur-xl p-3 rounded-r-2xl shadow-xl border border-white/30 hover:bg-white/60 transition-all",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
                             fill: "none",
                             stroke: "currentColor",
@@ -249,17 +257,17 @@ function App() {
                                 className: "jsx-915e81e316328a4b"
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
-                                lineNumber: 193,
+                                lineNumber: 198,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/page.jsx",
-                            lineNumber: 192,
+                            lineNumber: 197,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 189,
+                        lineNumber: 194,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -277,7 +285,7 @@ function App() {
                                                 children: "Вас приветствует AI Pharmacist!"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 203,
+                                                lineNumber: 208,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -285,18 +293,18 @@ function App() {
                                                 children: "Задайте вопрос о лекарствах, их составе, взаимодействии или применении"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 206,
+                                                lineNumber: 211,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/page.jsx",
-                                        lineNumber: 202,
+                                        lineNumber: 207,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.jsx",
-                                    lineNumber: 201,
+                                    lineNumber: 206,
                                     columnNumber: 38
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "jsx-915e81e316328a4b" + " " + `mx-auto space-y-8 transition-all duration-700 ease-in-out ${isSidebarOpen ? "max-w-3xl" : "max-w-5xl"}`,
@@ -307,14 +315,14 @@ function App() {
                                                     style: {
                                                         maxWidth: "calc(100% - 2rem)"
                                                     },
-                                                    className: "jsx-915e81e316328a4b" + " " + `px-7 py-5 rounded-3xl shadow-lg backdrop-blur-md border border-white/30 max-w-full`,
+                                                    className: "jsx-915e81e316328a4b" + " " + "px-7 py-5 rounded-3xl shadow-lg backdrop-blur-md border border-white/30 max-w-full",
                                                     children: [
                                                         msg.role === "assistant" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                             className: "jsx-915e81e316328a4b" + " " + "text-sm font-semibold text-[#1b5e20]/70 mb-2",
                                                             children: "AI Pharmacist"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/page.jsx",
-                                                            lineNumber: 216,
+                                                            lineNumber: 221,
                                                             columnNumber: 52
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -322,7 +330,7 @@ function App() {
                                                             children: msg.content
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/page.jsx",
-                                                            lineNumber: 220,
+                                                            lineNumber: 225,
                                                             columnNumber: 23
                                                         }, this),
                                                         msg.sources && msg.sources.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -333,7 +341,7 @@ function App() {
                                                                     children: "Источники:"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/page.jsx",
-                                                                    lineNumber: 225,
+                                                                    lineNumber: 230,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -346,29 +354,29 @@ function App() {
                                                                             children: src.name
                                                                         }, idx, false, {
                                                                             fileName: "[project]/app/page.jsx",
-                                                                            lineNumber: 230,
+                                                                            lineNumber: 235,
                                                                             columnNumber: 60
                                                                         }, this))
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/page.jsx",
-                                                                    lineNumber: 229,
+                                                                    lineNumber: 234,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/page.jsx",
-                                                            lineNumber: 224,
+                                                            lineNumber: 229,
                                                             columnNumber: 65
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/page.jsx",
-                                                    lineNumber: 213,
+                                                    lineNumber: 218,
                                                     columnNumber: 21
                                                 }, this)
                                             }, i, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 212,
+                                                lineNumber: 217,
                                                 columnNumber: 43
                                             }, this)),
                                         loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -380,17 +388,17 @@ function App() {
                                                     children: "Загрузка..."
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.jsx",
-                                                    lineNumber: 240,
+                                                    lineNumber: 245,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 239,
+                                                lineNumber: 244,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.jsx",
-                                            lineNumber: 238,
+                                            lineNumber: 243,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -398,18 +406,18 @@ function App() {
                                             className: "jsx-915e81e316328a4b"
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.jsx",
-                                            lineNumber: 244,
+                                            lineNumber: 249,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/page.jsx",
-                                    lineNumber: 211,
+                                    lineNumber: 216,
                                     columnNumber: 24
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
-                                lineNumber: 200,
+                                lineNumber: 205,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -427,7 +435,7 @@ function App() {
                                             className: "jsx-915e81e316328a4b" + " " + "text-[#1b5e20] flex-1 bg-white/30 backdrop-blur-xl px-7 py-5 rounded-3xl outline-none text-lg placeholder-[#1b5e20]/50 border border-white/40 focus:border-white/70 transition-all shadow-2xl"
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.jsx",
-                                            lineNumber: 251,
+                                            lineNumber: 256,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -440,41 +448,41 @@ function App() {
                                                 className: "jsx-915e81e316328a4b" + " " + "w-8 h-8 brightness-0 opacity-80"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 253,
+                                                lineNumber: 258,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.jsx",
-                                            lineNumber: 252,
+                                            lineNumber: 257,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/page.jsx",
-                                    lineNumber: 250,
+                                    lineNumber: 255,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
-                                lineNumber: 249,
+                                lineNumber: 254,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 198,
+                        lineNumber: 203,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 155,
+                lineNumber: 158,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.jsx",
-        lineNumber: 110,
+        lineNumber: 113,
         columnNumber: 10
     }, this);
 }

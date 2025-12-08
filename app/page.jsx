@@ -25,10 +25,9 @@ export default function App() {
   }, [messages, loading]);
 
   // -------------------------
-  // ➤ СОЗДАТЬ НОВЫЙ ЧАТ
+  // ➤ УДАЛЕНИЕ ЧАТА
   // -------------------------
   const deleteChat = (id) => {
-    // если удаляем активный — переключаемся на первый оставшийся
     setChats((prev) => {
       const updated = { ...prev };
       delete updated[id];
@@ -42,7 +41,16 @@ export default function App() {
       return updated;
     });
   };
+
+  // -------------------------
+  // ➤ СОЗДАТЬ НОВЫЙ ЧАТ (БЛОКИРОВКА ЕСЛИ ПУСТОЙ)
+  // -------------------------
   const createNewChat = () => {
+    if (chats[activeChat].messages.length === 0) {
+      alert("Сначала отправьте сообщение в текущий чат!");
+      return;
+    }
+
     const id = Date.now();
     setChats((prev) => ({
       ...prev,
@@ -61,7 +69,6 @@ export default function App() {
     const userMessage = query.trim();
     setQuery("");
 
-    // Добавляем сообщение пользователя
     setChats((prev) => ({
       ...prev,
       [activeChat]: {
@@ -86,7 +93,6 @@ export default function App() {
       if (!response.ok) throw new Error("Ошибка сервера");
       const result = await response.json();
 
-      // Добавляем ответ ассистента
       setChats((prev) => ({
         ...prev,
         [activeChat]: {
@@ -190,7 +196,16 @@ export default function App() {
           {/* КНОПКА НОВЫЙ ЧАТ */}
           <button
             onClick={createNewChat}
-            className="text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl hover:bg-white/50 transition-all hover:scale-[1.02] border border-white/20"
+            disabled={chats[activeChat].messages.length === 0}
+            className={`
+              text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl 
+              border border-white/20 transition-all
+              ${
+                chats[activeChat].messages.length === 0
+                  ? "opacity-40 cursor-not-allowed"
+                  : "hover:bg-white/50"
+              }
+            `}
           >
             + Новый чат
           </button>
@@ -200,14 +215,13 @@ export default function App() {
             {Object.entries(chats).map(([id, chat]) => (
               <div
                 key={id}
-                className={`
-      w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all group
-      ${
-        Number(id) === activeChat
-          ? "bg-white/60 text-[#1b5e20] font-semibold"
-          : "bg-white/20 text-[#1b5e20]/70 hover:bg-white/40"
-      }
-    `}
+                className={`w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all group
+                  ${
+                    Number(id) === activeChat
+                      ? "bg-white/60 text-[#1b5e20] font-semibold"
+                      : "bg-white/20 text-[#1b5e20]/70 hover:bg-white/40"
+                  }
+                `}
               >
                 <button
                   onClick={() => setActiveChat(Number(id))}
@@ -216,13 +230,14 @@ export default function App() {
                   {chat.title}
                 </button>
 
-                {/* Крестик удаления */}
-                <button
-                  onClick={() => deleteChat(Number(id))}
-                  className="opacity-0 group-hover:opacity-100 ml-3 text-red-500 hover:text-red-700 transition"
-                >
-                  ✕
-                </button>
+                {Number(id) !== 1 && (
+                  <button
+                    onClick={() => deleteChat(Number(id))}
+                    className="opacity-0 group-hover:opacity-100 ml-3 text-red-500 hover:text-red-700 transition"
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
             ))}
           </div>
@@ -231,7 +246,7 @@ export default function App() {
         {/* КНОПКА ПОКАЗАТЬ/СКРЫТЬ */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="absolute left-0 top-6 z-50 bg-white/40 backdrop-blur-xl p-3 rounded-r-2xl shadow-xl border border-white/30 shadow-2xl hover:bg-white/60 transition-all"
+          className="absolute left-0 top-6 z-50 bg-white/40 backdrop-blur-xl p-3 rounded-r-2xl shadow-xl border border-white/30 hover:bg-white/60 transition-all"
           style={{
             transform: isSidebarOpen ? "translateX(336px)" : "translateX(0)",
           }}
@@ -287,7 +302,7 @@ export default function App() {
                     }`}
                   >
                     <div
-                      className={`px-7 py-5 rounded-3xl shadow-lg backdrop-blur-md border border-white/30 max-w-full`}
+                      className="px-7 py-5 rounded-3xl shadow-lg backdrop-blur-md border border-white/30 max-w-full"
                       style={{ maxWidth: "calc(100% - 2rem)" }}
                     >
                       {msg.role === "assistant" && (

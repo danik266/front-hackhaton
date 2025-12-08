@@ -621,6 +621,10 @@
     transform: var(--tw-rotate-x, ) var(--tw-rotate-y, ) var(--tw-rotate-z, ) var(--tw-skew-x, ) var(--tw-skew-y, );
   }
 
+  .cursor-not-allowed {
+    cursor: not-allowed;
+  }
+
   .flex-col {
     flex-direction: column;
   }
@@ -998,6 +1002,10 @@
 
   .opacity-0 {
     opacity: 0;
+  }
+
+  .opacity-40 {
+    opacity: .4;
   }
 
   .opacity-80 {

@@ -778,3 +778,335 @@ It can also happen if the client has a browser extension installed which messes 
                       ...
           ...
 
+[00:37:56.811] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:37:56.937] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+                <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                  <RedirectBoundary>
+                    <RedirectErrorBoundary router={{...}}>
+                      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                        <SegmentViewNode type="page" pagePath="page.jsx">
+                          <SegmentTrieNode>
+                          <ClientPageRoot Component={function App} serverProvidedParams={{...}}>
+                            <App params={Promise} searchParams={Promise}>
+                              <div
++                               className="jsx-915e81e316328a4b relative flex h-screen"
+-                               className="jsx-5f6422e427b177e6 relative flex h-screen"
+                              >
+                                <div
++                                 className="jsx-915e81e316328a4b absolute inset-0 -z-10"
+-                                 className="jsx-5f6422e427b177e6 absolute inset-0 -z-10"
+                                >
+                                  <div
+                                    style={{background:"radial-gra...",backgroundSize:"200% 200%",animation:"iridescent..."}}
++                                   className="jsx-915e81e316328a4b w-full h-full"
+-                                   className="jsx-5f6422e427b177e6 w-full h-full"
+                                  >
+                                <JSXStyle>
+                                <div
++                                 className="jsx-915e81e316328a4b flex h-full w-full relative"
+-                                 className="jsx-5f6422e427b177e6 flex h-full w-full relative"
+                                >
+                                  <aside
++                                   className={"jsx-915e81e316328a4b \n            fixed inset-y-0 left-0 z-40 w-84 b..."}
+-                                   className={"jsx-5f6422e427b177e6 \n            fixed inset-y-0 left-0 z-40 w-84 b..."}
+                                  >
+                                    <h1
++                                     className="jsx-915e81e316328a4b text-2xl font-bold text-[#1b5e20]"
+-                                     className="jsx-5f6422e427b177e6 text-2xl font-bold text-[#1b5e20]"
+                                    >
++                                     AI Pharmacist
+                                    <button
+                                      onClick={function createNewChat}
++                                     className="jsx-915e81e316328a4b text-left text-[#1b5e20]/70 bg-white/30 backdrop..."
+-                                     className="jsx-5f6422e427b177e6 text-left text-[#1b5e20]/70 bg-white/30 backdrop..."
+                                    >
++                                     + Новый чат
+                                    <div
++                                     className="jsx-915e81e316328a4b space-y-3 overflow-y-auto pr-2"
+-                                     className="jsx-5f6422e427b177e6 space-y-3 overflow-y-auto pr-2"
+                                    >
+                                      <div
++                                       className={"jsx-915e81e316328a4b \n      w-full flex items-center justify-bet..."}
+-                                       className={"jsx-5f6422e427b177e6 \n      w-full flex items-center justify-bet..."}
+                                      >
+                                        <button
+                                          onClick={function onClick}
++                                         className="jsx-915e81e316328a4b flex-1 text-left truncate"
+-                                         className="jsx-5f6422e427b177e6 flex-1 text-left truncate"
+                                        >
++                                         Новый чат
+                                        <button
+                                          onClick={function onClick}
++                                         className="jsx-915e81e316328a4b opacity-0 group-hover:opacity-100 ml-3 text-..."
+-                                         className="jsx-5f6422e427b177e6 opacity-0 group-hover:opacity-100 ml-3 text-..."
+                                        >
++                                         ✕
+                                  <button
+                                    onClick={function onClick}
+                                    style={{transform:"translateX..."}}
++                                   className="jsx-915e81e316328a4b absolute left-0 top-6 z-50 bg-white/40 backdrop-bl..."
+-                                   className="jsx-5f6422e427b177e6 absolute left-0 top-6 z-50 bg-white/40 backdrop-bl..."
+                                  >
+                                    <svg
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
++                                     className="jsx-915e81e316328a4b w-6 h-6 text-[#1b5e20] transition-transform rota..."
+-                                     className="jsx-5f6422e427b177e6 w-6 h-6 text-[#1b5e20] transition-transform rota..."
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M15 19l-7-7 7-7"
++                                       className="jsx-915e81e316328a4b"
+-                                       className="jsx-5f6422e427b177e6"
+                                      >
+                                  <div
++                                   className="jsx-915e81e316328a4b text-[#1b5e20]/70 flex-1 flex flex-col transition-..."
+-                                   className="jsx-5f6422e427b177e6 text-[#1b5e20]/70 flex-1 flex flex-col transition-..."
+                                  >
+                                    <div
++                                     className="jsx-915e81e316328a4b flex-1 overflow-y-auto px-8 py-6"
+-                                     className="jsx-5f6422e427b177e6 flex-1 overflow-y-auto px-8 py-6"
+                                    >
+                                      <div
++                                       className="jsx-915e81e316328a4b h-full flex items-center justify-center"
+-                                       className="jsx-5f6422e427b177e6 h-full flex items-center justify-center"
+                                      >
+                                        <div
++                                         className="jsx-915e81e316328a4b text-center max-w-2xl mx-auto"
+-                                         className="jsx-5f6422e427b177e6 text-center max-w-2xl mx-auto"
+                                        >
+                                          <h2
++                                           className="jsx-915e81e316328a4b text-4xl font-light text-[#1b5e20]/80 mb-4"
+-                                           className="jsx-5f6422e427b177e6 text-4xl font-light text-[#1b5e20]/80 mb-4"
+                                          >
++                                           Вас приветствует AI Pharmacist!
+                                          <p
++                                           className="jsx-915e81e316328a4b text-lg text-[#1b5e20]/60"
+-                                           className="jsx-5f6422e427b177e6 text-lg text-[#1b5e20]/60"
+                                          >
++                                           Задайте вопрос о лекарствах, их составе, взаимодействии или применении
+                                    <div
++                                     className="jsx-915e81e316328a4b p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d..."
+-                                     className="jsx-5f6422e427b177e6 p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d..."
+                                    >
+                                      <form
+                                        onSubmit={function handleSubmit}
++                                       className="jsx-915e81e316328a4b mx-auto flex gap-4 transition-all duration-700..."
+-                                       className="jsx-5f6422e427b177e6 mx-auto flex gap-4 transition-all duration-700..."
+                                      >
+                                        <input
+                                          type="text"
+                                          value=""
+                                          onChange={function onChange}
+                                          placeholder="Узнать у AI Pharmacist..."
+                                          disabled={false}
++                                         className="jsx-915e81e316328a4b text-[#1b5e20] flex-1 bg-white/30 backdrop-b..."
+-                                         className="jsx-5f6422e427b177e6 text-[#1b5e20] flex-1 bg-white/30 backdrop-b..."
+                                        >
+                                        <button
+                                          type="submit"
+                                          disabled={true}
++                                         className="jsx-915e81e316328a4b bg-white/40 backdrop-blur-xl p-5 rounded-ful..."
+-                                         className="jsx-5f6422e427b177e6 bg-white/40 backdrop-blur-xl p-5 rounded-ful..."
+                                        >
+                                          <img
+                                            src="/free-icon-send-button-12439325 (1).png"
+                                            alt="Отправить"
++                                           className="jsx-915e81e316328a4b w-8 h-8 brightness-0 opacity-80"
+-                                           className="jsx-5f6422e427b177e6 w-8 h-8 brightness-0 opacity-80"
+                                          >
+                        ...
+                      ...
+          ...
+
+[00:40:59.420] Server  LOG      ✓ Compiled in 118ms
+[00:41:11.898] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'messages')
+[00:41:14.043] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:41:14.167] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+                <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                  <RedirectBoundary>
+                    <RedirectErrorBoundary router={{...}}>
+                      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                        <SegmentViewNode type="page" pagePath="page.jsx">
+                          <SegmentTrieNode>
+                          <ClientPageRoot Component={function App} serverProvidedParams={{...}}>
+                            <App params={Promise} searchParams={Promise}>
+                              <div
++                               className="jsx-915e81e316328a4b relative flex h-screen"
+-                               className="jsx-5f6422e427b177e6 relative flex h-screen"
+                              >
+                                <div
++                                 className="jsx-915e81e316328a4b absolute inset-0 -z-10"
+-                                 className="jsx-5f6422e427b177e6 absolute inset-0 -z-10"
+                                >
+                                  <div
+                                    style={{background:"radial-gra...",backgroundSize:"200% 200%",animation:"iridescent..."}}
++                                   className="jsx-915e81e316328a4b w-full h-full"
+-                                   className="jsx-5f6422e427b177e6 w-full h-full"
+                                  >
+                                <JSXStyle>
+                                <div
++                                 className="jsx-915e81e316328a4b flex h-full w-full relative"
+-                                 className="jsx-5f6422e427b177e6 flex h-full w-full relative"
+                                >
+                                  <aside
++                                   className={"jsx-915e81e316328a4b \n            fixed inset-y-0 left-0 z-40 w-84 b..."}
+-                                   className={"jsx-5f6422e427b177e6 \n            fixed inset-y-0 left-0 z-40 w-84 b..."}
+                                  >
+                                    <h1
++                                     className="jsx-915e81e316328a4b text-2xl font-bold text-[#1b5e20]"
+-                                     className="jsx-5f6422e427b177e6 text-2xl font-bold text-[#1b5e20]"
+                                    >
++                                     AI Pharmacist
+                                    <button
+                                      onClick={function createNewChat}
+                                      disabled={true}
++                                     className={"jsx-915e81e316328a4b \n              text-left text-[#1b5e20]/70 bg..."}
+-                                     className={"jsx-5f6422e427b177e6 \n              text-left text-[#1b5e20]/70 bg..."}
+                                    >
++                                     + Новый чат
+                                    <div
++                                     className="jsx-915e81e316328a4b space-y-3 overflow-y-auto pr-2"
+-                                     className="jsx-5f6422e427b177e6 space-y-3 overflow-y-auto pr-2"
+                                    >
+                                      <div
++                                       className={"jsx-915e81e316328a4b w-full flex items-center justify-between px-..."}
+-                                       className={"jsx-5f6422e427b177e6 w-full flex items-center justify-between px-..."}
+                                      >
+                                        <button
+                                          onClick={function onClick}
++                                         className="jsx-915e81e316328a4b flex-1 text-left truncate"
+-                                         className="jsx-5f6422e427b177e6 flex-1 text-left truncate"
+                                        >
++                                         Новый чат
+                                        <button
+                                          onClick={function onClick}
++                                         className="jsx-915e81e316328a4b opacity-0 group-hover:opacity-100 ml-3 text-..."
+-                                         className="jsx-5f6422e427b177e6 opacity-0 group-hover:opacity-100 ml-3 text-..."
+                                        >
++                                         ✕
+                                  <button
+                                    onClick={function onClick}
+                                    style={{transform:"translateX..."}}
++                                   className="jsx-915e81e316328a4b absolute left-0 top-6 z-50 bg-white/40 backdrop-bl..."
+-                                   className="jsx-5f6422e427b177e6 absolute left-0 top-6 z-50 bg-white/40 backdrop-bl..."
+                                  >
+                                    <svg
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
++                                     className="jsx-915e81e316328a4b w-6 h-6 text-[#1b5e20] transition-transform rota..."
+-                                     className="jsx-5f6422e427b177e6 w-6 h-6 text-[#1b5e20] transition-transform rota..."
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M15 19l-7-7 7-7"
++                                       className="jsx-915e81e316328a4b"
+-                                       className="jsx-5f6422e427b177e6"
+                                      >
+                                  <div
++                                   className="jsx-915e81e316328a4b text-[#1b5e20]/70 flex-1 flex flex-col transition-..."
+-                                   className="jsx-5f6422e427b177e6 text-[#1b5e20]/70 flex-1 flex flex-col transition-..."
+                                  >
+                                    <div
++                                     className="jsx-915e81e316328a4b flex-1 overflow-y-auto px-8 py-6"
+-                                     className="jsx-5f6422e427b177e6 flex-1 overflow-y-auto px-8 py-6"
+                                    >
+                                      <div
++                                       className="jsx-915e81e316328a4b h-full flex items-center justify-center"
+-                                       className="jsx-5f6422e427b177e6 h-full flex items-center justify-center"
+                                      >
+                                        <div
++                                         className="jsx-915e81e316328a4b text-center max-w-2xl mx-auto"
+-                                         className="jsx-5f6422e427b177e6 text-center max-w-2xl mx-auto"
+                                        >
+                                          <h2
++                                           className="jsx-915e81e316328a4b text-4xl font-light text-[#1b5e20]/80 mb-4"
+-                                           className="jsx-5f6422e427b177e6 text-4xl font-light text-[#1b5e20]/80 mb-4"
+                                          >
++                                           Вас приветствует AI Pharmacist!
+                                          <p
++                                           className="jsx-915e81e316328a4b text-lg text-[#1b5e20]/60"
+-                                           className="jsx-5f6422e427b177e6 text-lg text-[#1b5e20]/60"
+                                          >
++                                           Задайте вопрос о лекарствах, их составе, взаимодействии или применении
+                                    <div
++                                     className="jsx-915e81e316328a4b p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d..."
+-                                     className="jsx-5f6422e427b177e6 p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d..."
+                                    >
+                                      <form
+                                        onSubmit={function handleSubmit}
++                                       className="jsx-915e81e316328a4b mx-auto flex gap-4 transition-all duration-700..."
+-                                       className="jsx-5f6422e427b177e6 mx-auto flex gap-4 transition-all duration-700..."
+                                      >
+                                        <input
+                                          type="text"
+                                          value=""
+                                          onChange={function onChange}
+                                          placeholder="Узнать у AI Pharmacist..."
+                                          disabled={false}
++                                         className="jsx-915e81e316328a4b text-[#1b5e20] flex-1 bg-white/30 backdrop-b..."
+-                                         className="jsx-5f6422e427b177e6 text-[#1b5e20] flex-1 bg-white/30 backdrop-b..."
+                                        >
+                                        <button
+                                          type="submit"
+                                          disabled={true}
++                                         className="jsx-915e81e316328a4b bg-white/40 backdrop-blur-xl p-5 rounded-ful..."
+-                                         className="jsx-5f6422e427b177e6 bg-white/40 backdrop-blur-xl p-5 rounded-ful..."
+                                        >
+                                          <img
+                                            src="/free-icon-send-button-12439325 (1).png"
+                                            alt="Отправить"
++                                           className="jsx-915e81e316328a4b w-8 h-8 brightness-0 opacity-80"
+-                                           className="jsx-5f6422e427b177e6 w-8 h-8 brightness-0 opacity-80"
+                                          >
+                        ...
+                      ...
+          ...
+
+[00:42:12.137] Server  LOG      ✓ Compiled in 240ms
+[00:42:15.687] Server  LOG      ✓ Compiled in 59ms
+[00:42:19.683] Server  LOG      ✓ Compiled in 53ms
+[00:42:39.011] Server  LOG      ✓ Compiled in 161ms
+[00:42:41.287] Server  LOG      ✓ Compiled in 50ms
