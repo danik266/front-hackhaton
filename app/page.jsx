@@ -1,38 +1,129 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
 export default function App() {
+  const [chats, setChats] = useState({
+    1: { title: "Новый чат", messages: [] },
+  });
+
+  const [activeChat, setActiveChat] = useState(1);
+
+  const messages = chats[activeChat].messages;
+
   const [query, setQuery] = useState("");
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
+
+  // -------------------------
+  // ➤ СОЗДАТЬ НОВЫЙ ЧАТ
+  // -------------------------
+  const deleteChat = (id) => {
+    // если удаляем активный — переключаемся на первый оставшийся
+    setChats((prev) => {
+      const updated = { ...prev };
+      delete updated[id];
+
+      const remainingIds = Object.keys(updated);
+      const newActive =
+        remainingIds.length > 0 ? Number(remainingIds[0]) : null;
+
+      setActiveChat(newActive);
+
+      return updated;
+    });
+  };
+  const createNewChat = () => {
+    const id = Date.now();
+    setChats((prev) => ({
+      ...prev,
+      [id]: { title: "Новый чат", messages: [] },
+    }));
+    setActiveChat(id);
+  };
+
+  // -------------------------
+  // ➤ ОТПРАВКА СООБЩЕНИЙ
+  // -------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
+
+    const userMessage = query.trim();
+    setQuery("");
+
+    // Добавляем сообщение пользователя
+    setChats((prev) => ({
+      ...prev,
+      [activeChat]: {
+        ...prev[activeChat],
+        title:
+          prev[activeChat].messages.length === 0
+            ? userMessage.slice(0, 25) + "..."
+            : prev[activeChat].title,
+        messages: [
+          ...prev[activeChat].messages,
+          { role: "user", content: userMessage },
+        ],
+      },
+    }));
+
     setLoading(true);
-    setError("");
-    setData(null);
+
     try {
       const response = await fetch(
-        `http://localhost:8000/ask?query=${encodeURIComponent(query)}`
+        `http://localhost:8000/ask?query=${encodeURIComponent(userMessage)}`
       );
       if (!response.ok) throw new Error("Ошибка сервера");
       const result = await response.json();
-      setData(result);
+
+      // Добавляем ответ ассистента
+      setChats((prev) => ({
+        ...prev,
+        [activeChat]: {
+          ...prev[activeChat],
+          messages: [
+            ...prev[activeChat].messages,
+            {
+              role: "assistant",
+              content: result.answer || "Нет ответа",
+              sources: result.sources || [],
+            },
+          ],
+        },
+      }));
     } catch (err) {
-      setError(err.message);
+      setChats((prev) => ({
+        ...prev,
+        [activeChat]: {
+          ...prev[activeChat],
+          messages: [
+            ...prev[activeChat].messages,
+            {
+              role: "assistant",
+              content: `Ошибка: ${err.message}`,
+              error: true,
+            },
+          ],
+        },
+      }));
     } finally {
       setLoading(false);
     }
   };
+
   return (
-    <div className="relative flex h-screen overflow-hidden">
-      {/* Иридисцентный радиальный градиент: от белого центра к зелёному по краям, с мягким переливом для стеклянного эффекта */}
+    <div className="relative flex h-screen">
+      {/* ФОН */}
       <div className="absolute inset-0 -z-10">
         <div
           className="w-full h-full"
@@ -40,11 +131,11 @@ export default function App() {
             background:
               "radial-gradient(circle at center, #d5d5d5ff 0%, #d5d5d5ff 20%, #c8e6c9 60%, #a5d6a7 100%)",
             backgroundSize: "200% 200%",
-            animation: "iridescentBreath 5s ease-in-out infinite", // Ускорено до 5 секунд
+            animation: "iridescentBreath 5s ease-in-out infinite",
           }}
         />
       </div>
-      {/* Улучшенная анимация для иридисцентного "дыхания" с лёгким сдвигом для большего блеска */}
+
       <style jsx>{`
         @keyframes iridescentBreath {
           0%,
@@ -65,116 +156,218 @@ export default function App() {
             background-position: 100% 0%;
           }
         }
-        @keyframes fadeIn {
+        @keyframes fadeInUp {
           from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
           }
           to {
             opacity: 1;
             transform: translateY(0);
           }
         }
-        .fade-in {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-        .fade-in-delay-1 {
-          animation-delay: 0.2s;
-        }
-        .fade-in-delay-2 {
-          animation-delay: 0.4s;
-        }
-        .fade-in-delay-3 {
-          animation-delay: 0.6s;
+        .msg-animation {
+          animation: fadeInUp 0.6s ease-out forwards;
         }
       `}</style>
-      {/* Основной контент с улучшенным стеклянным эффектом: больше размытия, тонкие тени и градиенты для iOS-подобного вида */}
-      <div className="relative flex h-full w-full">
+
+      <div className="flex h-full w-full relative">
+        {/* ---------------- SIDEBAR ---------------- */}
         <aside
-          className={`w-64 bg-white/40 backdrop-blur-10xl border-white/20 p-6 flex flex-col gap-6 rounded-r-[2rem] ${
-            isLoaded ? "fade-in" : "opacity-0"
-          }`}
+          className={`
+            fixed inset-y-0 left-0 z-40 w-84 bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col gap-6 
+            transition-all duration-700 ease-in-out
+            ${
+              isSidebarOpen
+                ? "translate-x-0 opacity-100"
+                : "-translate-x-full opacity-0"
+            }
+            ${isLoaded ? "" : "-translate-x-20 opacity-0"}
+          `}
         >
-          <div className="text-2xl font-semibold text-[#1b5e20] px-4 py-2 rounded-xl backdrop-blur-md fade-in fade-in-delay-1">
-            AI Pharmacist
-          </div>
-          <button className="text-[#1b5e20] bg-white/30 backdrop-blur-2xl px-4 py-3 rounded-2xl hover:bg-white/40 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] border border-white/20 fade-in fade-in-delay-2">
-            Новый чат
+          <h1 className="text-2xl font-bold text-[#1b5e20]">AI Pharmacist</h1>
+
+          {/* КНОПКА НОВЫЙ ЧАТ */}
+          <button
+            onClick={createNewChat}
+            className="text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl hover:bg-white/50 transition-all hover:scale-[1.02] border border-white/20"
+          >
+            + Новый чат
           </button>
+
+          {/* СПИСОК ЧАТОВ */}
+          <div className="space-y-3 overflow-y-auto pr-2">
+            {Object.entries(chats).map(([id, chat]) => (
+              <div
+                key={id}
+                className={`
+      w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all group
+      ${
+        Number(id) === activeChat
+          ? "bg-white/60 text-[#1b5e20] font-semibold"
+          : "bg-white/20 text-[#1b5e20]/70 hover:bg-white/40"
+      }
+    `}
+              >
+                <button
+                  onClick={() => setActiveChat(Number(id))}
+                  className="flex-1 text-left truncate"
+                >
+                  {chat.title}
+                </button>
+
+                {/* Крестик удаления */}
+                <button
+                  onClick={() => deleteChat(Number(id))}
+                  className="opacity-0 group-hover:opacity-100 ml-3 text-red-500 hover:text-red-700 transition"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
         </aside>
-        <main
-          className={`flex-1 p-12 text-[#1b5e20] flex items-center justify-center ${
-            isLoaded ? "fade-in" : "opacity-0"
+
+        {/* КНОПКА ПОКАЗАТЬ/СКРЫТЬ */}
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="absolute left-0 top-6 z-50 bg-white/40 backdrop-blur-xl p-3 rounded-r-2xl shadow-xl border border-white/30 shadow-2xl hover:bg-white/60 transition-all"
+          style={{
+            transform: isSidebarOpen ? "translateX(336px)" : "translateX(0)",
+          }}
+        >
+          <svg
+            className={`w-6 h-6 text-[#1b5e20] transition-transform ${
+              isSidebarOpen ? "rotate-180" : ""
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </button>
+
+        {/* ---------------- MAIN CHAT ---------------- */}
+        <div
+          className={`text-[#1b5e20]/70 flex-1 flex flex-col transition-all duration-700 ease-in-out overflow-hidden ${
+            isSidebarOpen ? "ml-84" : "ml-0"
           }`}
         >
-          <div>
-            <h1 className="text-3xl mb-10 px-3 rounded-2xl fade-in fade-in-delay-1">
-              Вас приветствует AI Pharmacist!
-            </h1>
-            <form
-              onSubmit={handleSubmit}
-              className={`flex w-[470px] bg-white/15 backdrop-blur-3xl px-6 py-4 rounded-3xl shadow-xl border border-white/30 hover:shadow-2xl transition-all duration-300 hover:bg-white/20 fade-in fade-in-delay-2`}
-            >
-              <input
-                type="text"
-                className="flex-1 bg-transparent outline-none text-lg placeholder-[#1b5e20]/30"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Узнать у AI Pharmacist"
-              />
-              <button
-                type="submit"
-                className="text-xl hover:opacity-80 transition pl-2 bg-white/20 rounded-full p-2"
-              ></button>
-            </form>
-            {loading && (
-              <p className="mt-6 text-lg bg-white/10 px-4 py-2 rounded-xl backdrop-blur-md inline-block fade-in fade-in-delay-3">
-                Загрузка...
-              </p>
-            )}
-            {error && (
-              <p className="mt-6 text-lg text-red-400 bg-white/10 px-4 py-2 rounded-xl backdrop-blur-md inline-block fade-in fade-in-delay-3">
-                Ошибка: {error}
-              </p>
-            )}
-            {data && (
+          {/* СООБЩЕНИЯ */}
+          <div className="flex-1 overflow-y-auto px-8 py-6">
+            {messages.length === 0 ? (
+              <div className="h-full flex items-center justify-center">
+                <div className="text-center max-w-2xl mx-auto">
+                  <h2 className="text-4xl font-light text-[#1b5e20]/80 mb-4">
+                    Вас приветствует AI Pharmacist!
+                  </h2>
+                  <p className="text-lg text-[#1b5e20]/60">
+                    Задайте вопрос о лекарствах, их составе, взаимодействии или
+                    применении
+                  </p>
+                </div>
+              </div>
+            ) : (
               <div
-                className={`mt-10 w-full max-w-[470px] fade-in fade-in-delay-3`}
+                className={`mx-auto space-y-8 transition-all duration-700 ease-in-out ${
+                  isSidebarOpen ? "max-w-3xl" : "max-w-5xl"
+                }`}
               >
-                <h2 className="text-2xl font-semibold bg-white/20 px-4 py-2 rounded-xl backdrop-blur-md inline-block">
-                  Ответ:
-                </h2>
-                <p className="mt-4 text-lg leading-relaxed bg-white/10 p-6 rounded-2xl backdrop-blur-2xl border border-white/20 shadow-lg">
-                  {data.answer}
-                </p>
-                {data.sources && data.sources.length > 0 && (
-                  <>
-                    <h3 className="text-xl mt-6 font-medium bg-white/20 px-4 py-2 rounded-xl backdrop-blur-md inline-block">
-                      Источники:
-                    </h3>
-                    <ul className="list-disc ml-6 mt-2 space-y-1">
-                      {data.sources.map((src, idx) => (
-                        <li
-                          key={idx}
-                          className="bg-white/5 p-2 rounded-lg backdrop-blur-md"
-                        >
-                          <a
-                            href={src.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-600 underline hover:text-blue-800 transition"
-                          >
-                            {src.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
+                {messages.map((msg, i) => (
+                  <div
+                    key={i}
+                    className={`msg-animation flex ${
+                      msg.role === "user" ? "justify-end" : "justify-start"
+                    }`}
+                  >
+                    <div
+                      className={`px-7 py-5 rounded-3xl shadow-lg backdrop-blur-md border border-white/30 max-w-full`}
+                      style={{ maxWidth: "calc(100% - 2rem)" }}
+                    >
+                      {msg.role === "assistant" && (
+                        <p className="text-sm font-semibold text-[#1b5e20]/70 mb-2">
+                          AI Pharmacist
+                        </p>
+                      )}
+
+                      <p className="text-lg leading-relaxed whitespace-pre-wrap">
+                        {msg.content}
+                      </p>
+
+                      {msg.sources && msg.sources.length > 0 && (
+                        <div className="mt-5 pt-5 border-t border-white/30">
+                          <p className="text-sm font-medium text-[#1b5e20]/80 mb-3">
+                            Источники:
+                          </p>
+
+                          <div className="space-y-2">
+                            {msg.sources.map((src, idx) => (
+                              <a
+                                key={idx}
+                                href={src.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block text-sm text-blue-600 hover:text-blue-800 underline"
+                              >
+                                {src.name}
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+
+                {loading && (
+                  <div className="flex justify-start">
+                    <div className="shadow-xl text-[#1b5e20] px-7 py-5 rounded-3xl backdrop-blur-md border border-white/30">
+                      <p className="text-lg">Загрузка...</p>
+                    </div>
+                  </div>
                 )}
+
+                <div ref={messagesEndRef} />
               </div>
             )}
           </div>
-        </main>
+
+          {/* ВВОД */}
+          <div className="p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d6a7]/20 to-transparent backdrop-blur-md">
+            <form
+              onSubmit={handleSubmit}
+              className={`mx-auto flex gap-4 transition-all duration-700 ease-in-out ${
+                isSidebarOpen ? "max-w-3xl" : "max-w-5xl"
+              }`}
+            >
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Узнать у AI Pharmacist..."
+                className="text-[#1b5e20] flex-1 bg-white/30 backdrop-blur-xl px-7 py-5 rounded-3xl outline-none text-lg placeholder-[#1b5e20]/50 border border-white/40 focus:border-white/70 transition-all shadow-2xl"
+                disabled={loading}
+              />
+              <button
+                type="submit"
+                disabled={loading || !query.trim()}
+                className="bg-white/40 backdrop-blur-xl p-5 rounded-full hover:bg-white/60 transition-all hover:scale-110 disabled:opacity-40 disabled:cursor-not-allowed shadow-xl border border-white/30"
+              >
+                <img
+                  src="/free-icon-send-button-12439325 (1).png"
+                  alt="Отправить"
+                  className="w-8 h-8 brightness-0 opacity-80"
+                />
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
