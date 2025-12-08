@@ -97,7 +97,6 @@ export default function App() {
             transform: translateY(0);
           }
         }
-
         .msg-animation {
           animation: fadeInUp 0.6s ease-out forwards;
         }
