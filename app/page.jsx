@@ -89,7 +89,7 @@ export default function App() {
       `}</style>
 
       <div className="relative flex h-full w-full">
-<aside className="w-64 bg-white/40 backdrop-blur-10xl border-white/20 p-6 flex flex-col gap-6 rounded-r-[2rem] fade-in">
+<aside className="w-64 bg-white/40 backdrop-blur-10xl border-white/20 p-6 flex flex-col gap-6 fade-in">
 
   <div className="text-2xl font-semibold text-[#1b5e20] px-4 py-2  rounded-xl backdrop-blur-md">
     AI Pharmacist
