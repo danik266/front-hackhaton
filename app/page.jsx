@@ -5,52 +5,39 @@ export default function App() {
   const [chats, setChats] = useState({
     1: { title: "Новый чат", messages: [] },
   });
-
   const [activeChat, setActiveChat] = useState(1);
-
-  const messages = chats[activeChat].messages;
+  const messages = chats[activeChat]?.messages || [];
 
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [theme, setTheme] = useState("light"); // "light" или "dark"
+
   const messagesEndRef = useRef(null);
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  useEffect(() => setIsLoaded(true), []);
+  useEffect(
+    () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }),
+    [messages, loading]
+  );
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
-
-  // -------------------------
-  // ➤ УДАЛЕНИЕ ЧАТА
-  // -------------------------
   const deleteChat = (id) => {
+    if (id === 1) return;
     setChats((prev) => {
       const updated = { ...prev };
       delete updated[id];
-
       const remainingIds = Object.keys(updated);
-      const newActive =
-        remainingIds.length > 0 ? Number(remainingIds[0]) : null;
-
-      setActiveChat(newActive);
-
+      setActiveChat(remainingIds.length > 0 ? Number(remainingIds[0]) : null);
       return updated;
     });
   };
 
-  // -------------------------
-  // ➤ СОЗДАТЬ НОВЫЙ ЧАТ (БЛОКИРОВКА ЕСЛИ ПУСТОЙ)
-  // -------------------------
   const createNewChat = () => {
-    if (chats[activeChat].messages.length === 0) {
+    if (!activeChat || chats[activeChat].messages.length === 0) {
       alert("Сначала отправьте сообщение в текущий чат!");
       return;
     }
-
     const id = Date.now();
     setChats((prev) => ({
       ...prev,
@@ -59,13 +46,9 @@ export default function App() {
     setActiveChat(id);
   };
 
-  // -------------------------
-  // ➤ ОТПРАВКА СООБЩЕНИЙ
-  // -------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
-
     const userMessage = query.trim();
     setQuery("");
 
@@ -85,14 +68,12 @@ export default function App() {
     }));
 
     setLoading(true);
-
     try {
       const response = await fetch(
         `http://localhost:8000/ask?query=${encodeURIComponent(userMessage)}`
       );
       if (!response.ok) throw new Error("Ошибка сервера");
       const result = await response.json();
-
       setChats((prev) => ({
         ...prev,
         [activeChat]: {
@@ -127,101 +108,85 @@ export default function App() {
     }
   };
 
+  // ------------------------- Стили по теме -------------------------
+  const isLight = theme === "light";
+
+  const bgStyle = {
+    backgroundImage: isLight
+      ? "radial-gradient(circle at center, #d5d5d5ff 0%, #d5d5d5ff 20%, #c8e6c9 60%, #a5d6a7 100%)"
+      : "radial-gradient(circle at center, #1b1b1b 0%, #121212 40%, #0c0f0c 100%)",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center center",
+    backgroundSize: "200% 200%",
+    animation: isLight
+      ? "iridescentBreath 5s ease-in-out infinite"
+      : "darkBreath 6s ease-in-out infinite",
+  };
+
+  const textColor = isLight ? "#1b5e20" : "#c8e6c9";
+  const sidebarBg = isLight ? "bg-white/40" : "bg-[#0f0f0f]/70";
+
   return (
     <div className="relative flex h-screen">
       {/* ФОН */}
       <div className="absolute inset-0 -z-10">
-        <div
-          className="w-full h-full"
-          style={{
-            background:
-              "radial-gradient(circle at center, #d5d5d5ff 0%, #d5d5d5ff 20%, #c8e6c9 60%, #a5d6a7 100%)",
-            backgroundSize: "200% 200%",
-            animation: "iridescentBreath 5s ease-in-out infinite",
-          }}
-        />
+        <div className="w-full h-full" style={bgStyle} />
       </div>
-
-      <style jsx>{`
-        @keyframes iridescentBreath {
-          0%,
-          100% {
-            background-size: 150% 200%;
-            background-position: 0% 50%;
-          }
-          25% {
-            background-size: 170% 220%;
-            background-position: 0% 100%;
-          }
-          50% {
-            background-size: 150% 200%;
-            background-position: 100% 50%;
-          }
-          75% {
-            background-size: 170% 220%;
-            background-position: 100% 0%;
-          }
-        }
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .msg-animation {
-          animation: fadeInUp 0.6s ease-out forwards;
-        }
-      `}</style>
 
       <div className="flex h-full w-full relative">
         {/* ---------------- SIDEBAR ---------------- */}
         <aside
-          className={`
-            fixed inset-y-0 left-0 z-40 w-84 bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col gap-6 
-            transition-all duration-700 ease-in-out
-            ${
-              isSidebarOpen
-                ? "translate-x-0 opacity-100"
-                : "-translate-x-full opacity-0"
-            }
-            ${isLoaded ? "" : "-translate-x-20 opacity-0"}
-          `}
+          className={`fixed inset-y-0 left-0 z-30 w-84 ${sidebarBg} backdrop-blur-xl border-r p-6 flex flex-col gap-4 transition-all duration-700`}
+          style={{ borderColor: isLight ? "transparent" : "#1f1f1f" }}
         >
-          <h1 className="text-2xl font-bold text-[#1b5e20]">AI Pharmacist</h1>
+          <h1 className={`text-2xl font-bold`} style={{ color: textColor }}>
+            AI Pharmacist
+          </h1>
 
-          {/* КНОПКА НОВЫЙ ЧАТ */}
           <button
             onClick={createNewChat}
-            disabled={chats[activeChat].messages.length === 0}
-            className={`
-              text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl 
-              border border-white/20 transition-all
-              ${
-                chats[activeChat].messages.length === 0
-                  ? "opacity-40 cursor-not-allowed"
-                  : "hover:bg-white/50"
-              }
-            `}
+            disabled={!activeChat || chats[activeChat]?.messages.length === 0}
+            className={`text-left px-5 py-3 rounded-2xl border transition-all`}
+            style={{
+              color: textColor,
+              borderColor: isLight ? "#ffffff33" : "#2a2a2a",
+              backgroundColor: isLight
+                ? "rgba(255,255,255,0.3)"
+                : "rgba(26,26,26,0.6)",
+              opacity:
+                !activeChat || chats[activeChat]?.messages.length === 0
+                  ? 0.4
+                  : 1,
+              cursor:
+                !activeChat || chats[activeChat]?.messages.length === 0
+                  ? "not-allowed"
+                  : "pointer",
+            }}
           >
             + Новый чат
           </button>
 
-          {/* СПИСОК ЧАТОВ */}
           <div className="space-y-3 overflow-y-auto pr-2">
             {Object.entries(chats).map(([id, chat]) => (
               <div
                 key={id}
-                className={`w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all group
-                  ${
+                className={`w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all group`}
+                style={{
+                  backgroundColor:
                     Number(id) === activeChat
-                      ? "bg-white/60 text-[#1b5e20] font-semibold"
-                      : "bg-white/20 text-[#1b5e20]/70 hover:bg-white/40"
-                  }
-                `}
+                      ? isLight
+                        ? "#ffffff99"
+                        : "#1e1e1e"
+                      : isLight
+                      ? "#ffffff33"
+                      : "#141414",
+                  color:
+                    Number(id) === activeChat
+                      ? textColor
+                      : isLight
+                      ? "#1b5e2070"
+                      : "#c8e6c980",
+                }}
               >
                 <button
                   onClick={() => setActiveChat(Number(id))}
@@ -229,11 +194,10 @@ export default function App() {
                 >
                   {chat.title}
                 </button>
-
                 {Number(id) !== 1 && (
                   <button
                     onClick={() => deleteChat(Number(id))}
-                    className="opacity-0 group-hover:opacity-100 ml-3 text-red-500 hover:text-red-700 transition"
+                    className="opacity-0 group-hover:opacity-100 ml-3 text-red-500 hover:text-red-700"
                   >
                     ✕
                   </button>
@@ -241,22 +205,41 @@ export default function App() {
               </div>
             ))}
           </div>
+
+          {/* Кнопка переключения темы */}
+          <button
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            className="mt-auto px-4 py-2 rounded-xl border transition-all"
+            style={{
+              borderColor: textColor,
+              color: textColor,
+              backgroundColor: isLight
+                ? "rgba(255,255,255,0.3)"
+                : "rgba(26,26,26,0.6)",
+            }}
+          >
+            {theme === "light" ? "Темная тема" : "Светлая тема"}
+          </button>
         </aside>
 
-        {/* КНОПКА ПОКАЗАТЬ/СКРЫТЬ */}
+        {/* Кнопка показать/скрыть sidebar */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="absolute left-0 top-6 z-50 bg-white/40 backdrop-blur-xl p-3 rounded-r-2xl shadow-xl border border-white/30 hover:bg-white/60 transition-all"
+          className="absolute left-0 top-6 z-50 bg-white/40 backdrop-blur-xl p-3 rounded-r-2xl border transition-all"
           style={{
             transform: isSidebarOpen ? "translateX(336px)" : "translateX(0)",
+            borderColor: isLight ? "#ffffff33" : "#2a2a2a",
+            backgroundColor: isLight
+              ? "rgba(255,255,255,0.4)"
+              : "rgba(26,26,26,0.7)",
           }}
         >
           <svg
-            className={`w-6 h-6 text-[#1b5e20] transition-transform ${
+            className={`w-6 h-6 transition-transform ${
               isSidebarOpen ? "rotate-180" : ""
             }`}
             fill="none"
-            stroke="currentColor"
+            stroke={textColor}
             viewBox="0 0 24 24"
           >
             <path
@@ -270,27 +253,31 @@ export default function App() {
 
         {/* ---------------- MAIN CHAT ---------------- */}
         <div
-          className={`text-[#1b5e20]/70 flex-1 flex flex-col transition-all duration-700 ease-in-out overflow-hidden ${
-            isSidebarOpen ? "ml-84" : "ml-0"
-          }`}
+          className={`flex-1 flex flex-col transition-all duration-700`}
+          style={{ marginLeft: isSidebarOpen ? 336 : 0 }}
         >
-          {/* СООБЩЕНИЯ */}
           <div className="flex-1 overflow-y-auto px-8 py-6">
             {messages.length === 0 ? (
               <div className="h-full flex items-center justify-center">
                 <div className="text-center max-w-2xl mx-auto">
-                  <h2 className="text-4xl font-light text-[#1b5e20]/80 mb-4">
-                    Вас приветствует AI Pharmacist!
+                  <h2
+                    className="text-4xl font-light mb-4"
+                    style={{ color: textColor }}
+                  >
+                    Добро пожаловать в AI Pharmacist!
                   </h2>
-                  <p className="text-lg text-[#1b5e20]/60">
-                    Задайте вопрос о лекарствах, их составе, взаимодействии или
-                    применении
+                  <p
+                    className="text-lg"
+                    style={{ color: isLight ? "#1b5e2070" : "#c8e6c980" }}
+                  >
+                    Задайте вопрос о лекарствах, применении, составе или
+                    взаимодействии.
                   </p>
                 </div>
               </div>
             ) : (
               <div
-                className={`mx-auto space-y-8 transition-all duration-700 ease-in-out ${
+                className={`mx-auto space-y-8 ${
                   isSidebarOpen ? "max-w-3xl" : "max-w-5xl"
                 }`}
               >
@@ -302,25 +289,41 @@ export default function App() {
                     }`}
                   >
                     <div
-                      className="px-7 py-5 rounded-3xl shadow-lg backdrop-blur-md border border-white/30 max-w-full"
-                      style={{ maxWidth: "calc(100% - 2rem)" }}
+                      className="px-7 py-5 rounded-3xl shadow-lg backdrop-blur-md border"
+                      style={{
+                        maxWidth: "calc(100% - 2rem)",
+                        backgroundColor: isLight
+                          ? msg.role === "user"
+                            ? "#e0f2f1"
+                            : "#ffffffaa"
+                          : msg.role === "user"
+                          ? "#1a1f1a"
+                          : "#1e1e1e",
+                        borderColor: isLight ? "#ffffff33" : "#2d332d",
+                        color: textColor,
+                      }}
                     >
                       {msg.role === "assistant" && (
-                        <p className="text-sm font-semibold text-[#1b5e20]/70 mb-2">
+                        <p className="text-sm font-semibold mb-2">
                           AI Pharmacist
                         </p>
                       )}
-
                       <p className="text-lg leading-relaxed whitespace-pre-wrap">
                         {msg.content}
                       </p>
-
                       {msg.sources && msg.sources.length > 0 && (
-                        <div className="mt-5 pt-5 border-t border-white/30">
-                          <p className="text-sm font-medium text-[#1b5e20]/80 mb-3">
+                        <div
+                          className="mt-5 pt-5 border-t"
+                          style={{
+                            borderColor: isLight ? "#ffffff33" : "#2e2e2e",
+                          }}
+                        >
+                          <p
+                            className="text-sm font-medium mb-3"
+                            style={{ color: isLight ? "#1b5e20" : "#c8e6c980" }}
+                          >
                             Источники:
                           </p>
-
                           <div className="space-y-2">
                             {msg.sources.map((src, idx) => (
                               <a
@@ -328,7 +331,10 @@ export default function App() {
                                 href={src.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block text-sm text-blue-600 hover:text-blue-800 underline"
+                                className="block text-sm underline"
+                                style={{
+                                  color: isLight ? "#1b5e20" : "#c8e6c9",
+                                }}
                               >
                                 {src.name}
                               </a>
@@ -339,25 +345,30 @@ export default function App() {
                     </div>
                   </div>
                 ))}
-
                 {loading && (
                   <div className="flex justify-start">
-                    <div className="shadow-xl text-[#1b5e20] px-7 py-5 rounded-3xl backdrop-blur-md border border-white/30">
+                    <div
+                      className="shadow-xl px-7 py-5 rounded-3xl backdrop-blur-md border"
+                      style={{
+                        borderColor: isLight ? "#ffffff33" : "#2d332d",
+                        backgroundColor: isLight ? "#ffffffaa" : "#1a1f1a",
+                        color: textColor,
+                      }}
+                    >
                       <p className="text-lg">Загрузка...</p>
                     </div>
                   </div>
                 )}
-
                 <div ref={messagesEndRef} />
               </div>
             )}
           </div>
 
           {/* ВВОД */}
-          <div className="p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d6a7]/20 to-transparent backdrop-blur-md">
+          <div className="p-6 bg-gradient-to-t from-transparent via-transparent to-transparent backdrop-blur-md">
             <form
               onSubmit={handleSubmit}
-              className={`mx-auto flex gap-4 transition-all duration-700 ease-in-out ${
+              className={`mx-auto flex gap-4 ${
                 isSidebarOpen ? "max-w-3xl" : "max-w-5xl"
               }`}
             >
@@ -365,19 +376,40 @@ export default function App() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Узнать у AI Pharmacist..."
-                className="text-[#1b5e20] flex-1 bg-white/30 backdrop-blur-xl px-7 py-5 rounded-3xl outline-none text-lg placeholder-[#1b5e20]/50 border border-white/40 focus:border-white/70 transition-all shadow-2xl"
+                placeholder={
+                  isLight
+                    ? "Узнать у AI Pharmacist..."
+                    : "Спросить AI Pharmacist..."
+                }
+                className={`flex-1 px-7 py-5 rounded-3xl outline-none text-lg border shadow-xl placeholder-opacity-50 ${
+                  isLight ? "placeholder-green-900" : "placeholder-green-200"
+                }`}
+                style={{
+                  backgroundColor: isLight
+                    ? "rgba(255,255,255,0.3)"
+                    : "rgba(26,26,26,0.7)",
+                  color: textColor,
+                  borderColor: isLight ? "#ffffff33" : "#2a2a2a",
+                }}
                 disabled={loading}
               />
               <button
                 type="submit"
                 disabled={loading || !query.trim()}
-                className="bg-white/40 backdrop-blur-xl p-5 rounded-full hover:bg-white/60 transition-all hover:scale-110 disabled:opacity-40 disabled:cursor-not-allowed shadow-xl border border-white/30"
+                className="p-5 rounded-full border shadow-xl transition-all hover:scale-110"
+                style={{
+                  backgroundColor: isLight
+                    ? "rgba(255,255,255,0.4)"
+                    : "rgba(26,26,26,0.7)",
+                  borderColor: isLight ? "#ffffff33" : "#2a2a2a",
+                }}
               >
                 <img
                   src="/free-icon-send-button-12439325 (1).png"
                   alt="Отправить"
-                  className="w-8 h-8 brightness-0 opacity-80"
+                  className={`w-8 h-8 ${
+                    isLight ? "" : "invert brightness-150"
+                  }`}
                 />
               </button>
             </form>
