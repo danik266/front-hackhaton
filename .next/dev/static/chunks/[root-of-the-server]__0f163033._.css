@@ -895,6 +895,11 @@
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
 
+  .duration-500 {
+    --tw-duration: .5s;
+    transition-duration: .5s;
+  }
+
   .duration-700 {
     --tw-duration: .7s;
     transition-duration: .7s;
