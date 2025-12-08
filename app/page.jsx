@@ -2,7 +2,14 @@
 import React, { useState, useEffect, useRef } from "react";
 
 export default function App() {
-  const [messages, setMessages] = useState([]);
+  const [chats, setChats] = useState({
+    1: { title: "Новый чат", messages: [] },
+  });
+
+  const [activeChat, setActiveChat] = useState(1);
+
+  const messages = chats[activeChat].messages;
+
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -17,13 +24,59 @@ export default function App() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  // -------------------------
+  // ➤ СОЗДАТЬ НОВЫЙ ЧАТ
+  // -------------------------
+  const deleteChat = (id) => {
+    // если удаляем активный — переключаемся на первый оставшийся
+    setChats((prev) => {
+      const updated = { ...prev };
+      delete updated[id];
+
+      const remainingIds = Object.keys(updated);
+      const newActive =
+        remainingIds.length > 0 ? Number(remainingIds[0]) : null;
+
+      setActiveChat(newActive);
+
+      return updated;
+    });
+  };
+  const createNewChat = () => {
+    const id = Date.now();
+    setChats((prev) => ({
+      ...prev,
+      [id]: { title: "Новый чат", messages: [] },
+    }));
+    setActiveChat(id);
+  };
+
+  // -------------------------
+  // ➤ ОТПРАВКА СООБЩЕНИЙ
+  // -------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
 
     const userMessage = query.trim();
     setQuery("");
-    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+
+    // Добавляем сообщение пользователя
+    setChats((prev) => ({
+      ...prev,
+      [activeChat]: {
+        ...prev[activeChat],
+        title:
+          prev[activeChat].messages.length === 0
+            ? userMessage.slice(0, 25) + "..."
+            : prev[activeChat].title,
+        messages: [
+          ...prev[activeChat].messages,
+          { role: "user", content: userMessage },
+        ],
+      },
+    }));
+
     setLoading(true);
 
     try {
@@ -33,19 +86,36 @@ export default function App() {
       if (!response.ok) throw new Error("Ошибка сервера");
       const result = await response.json();
 
-      setMessages((prev) => [
+      // Добавляем ответ ассистента
+      setChats((prev) => ({
         ...prev,
-        {
-          role: "assistant",
-          content: result.answer || "Нет ответа",
-          sources: result.sources || [],
+        [activeChat]: {
+          ...prev[activeChat],
+          messages: [
+            ...prev[activeChat].messages,
+            {
+              role: "assistant",
+              content: result.answer || "Нет ответа",
+              sources: result.sources || [],
+            },
+          ],
         },
-      ]);
+      }));
     } catch (err) {
-      setMessages((prev) => [
+      setChats((prev) => ({
         ...prev,
-        { role: "assistant", content: `Ошибка: ${err.message}`, error: true },
-      ]);
+        [activeChat]: {
+          ...prev[activeChat],
+          messages: [
+            ...prev[activeChat].messages,
+            {
+              role: "assistant",
+              content: `Ошибка: ${err.message}`,
+              error: true,
+            },
+          ],
+        },
+      }));
     } finally {
       setLoading(false);
     }
@@ -53,7 +123,7 @@ export default function App() {
 
   return (
     <div className="relative flex h-screen">
-      {/* Красивый иридисцентный фон */}
+      {/* ФОН */}
       <div className="absolute inset-0 -z-10">
         <div
           className="w-full h-full"
@@ -86,7 +156,6 @@ export default function App() {
             background-position: 100% 0%;
           }
         }
-
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -103,7 +172,7 @@ export default function App() {
       `}</style>
 
       <div className="flex h-full w-full relative">
-        {/* Боковая панель с анимацией — теперь fixed */}
+        {/* ---------------- SIDEBAR ---------------- */}
         <aside
           className={`
             fixed inset-y-0 left-0 z-40 w-84 bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col gap-6 
@@ -117,18 +186,55 @@ export default function App() {
           `}
         >
           <h1 className="text-2xl font-bold text-[#1b5e20]">AI Pharmacist</h1>
-          <button className="text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl hover:bg-white/50 transition-all hover:scale-[1.02] border border-white/20">
+
+          {/* КНОПКА НОВЫЙ ЧАТ */}
+          <button
+            onClick={createNewChat}
+            className="text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl hover:bg-white/50 transition-all hover:scale-[1.02] border border-white/20"
+          >
             + Новый чат
           </button>
+
+          {/* СПИСОК ЧАТОВ */}
+          <div className="space-y-3 overflow-y-auto pr-2">
+            {Object.entries(chats).map(([id, chat]) => (
+              <div
+                key={id}
+                className={`
+      w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all group
+      ${
+        Number(id) === activeChat
+          ? "bg-white/60 text-[#1b5e20] font-semibold"
+          : "bg-white/20 text-[#1b5e20]/70 hover:bg-white/40"
+      }
+    `}
+              >
+                <button
+                  onClick={() => setActiveChat(Number(id))}
+                  className="flex-1 text-left truncate"
+                >
+                  {chat.title}
+                </button>
+
+                {/* Крестик удаления */}
+                <button
+                  onClick={() => deleteChat(Number(id))}
+                  className="opacity-0 group-hover:opacity-100 ml-3 text-red-500 hover:text-red-700 transition"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
         </aside>
 
-        {/* Кнопка скрытия/показа сайдбара — всегда видна */}
+        {/* КНОПКА ПОКАЗАТЬ/СКРЫТЬ */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           className="absolute left-0 top-6 z-50 bg-white/40 backdrop-blur-xl p-3 rounded-r-2xl shadow-xl border border-white/30 shadow-2xl hover:bg-white/60 transition-all"
           style={{
             transform: isSidebarOpen ? "translateX(336px)" : "translateX(0)",
-          }} // 336px = w-84 (21rem)
+          }}
         >
           <svg
             className={`w-6 h-6 text-[#1b5e20] transition-transform ${
@@ -147,13 +253,13 @@ export default function App() {
           </svg>
         </button>
 
-        {/* Основная область чата — растягивается, центрирует контент и сдвигается динамически */}
+        {/* ---------------- MAIN CHAT ---------------- */}
         <div
           className={`text-[#1b5e20]/70 flex-1 flex flex-col transition-all duration-700 ease-in-out overflow-hidden ${
             isSidebarOpen ? "ml-84" : "ml-0"
           }`}
         >
-          {/* Сообщения */}
+          {/* СООБЩЕНИЯ */}
           <div className="flex-1 overflow-y-auto px-8 py-6">
             {messages.length === 0 ? (
               <div className="h-full flex items-center justify-center">
@@ -189,6 +295,7 @@ export default function App() {
                           AI Pharmacist
                         </p>
                       )}
+
                       <p className="text-lg leading-relaxed whitespace-pre-wrap">
                         {msg.content}
                       </p>
@@ -198,6 +305,7 @@ export default function App() {
                           <p className="text-sm font-medium text-[#1b5e20]/80 mb-3">
                             Источники:
                           </p>
+
                           <div className="space-y-2">
                             {msg.sources.map((src, idx) => (
                               <a
@@ -219,17 +327,18 @@ export default function App() {
 
                 {loading && (
                   <div className="flex justify-start">
-                    <div className="shadow-xl  text-[#1b5e20] px-7 py-5 rounded-3xl backdrop-blur-md border border-white/30">
+                    <div className="shadow-xl text-[#1b5e20] px-7 py-5 rounded-3xl backdrop-blur-md border border-white/30">
                       <p className="text-lg">Загрузка...</p>
                     </div>
                   </div>
                 )}
+
                 <div ref={messagesEndRef} />
               </div>
             )}
           </div>
 
-          {/* Поле ввода — центрируется с той же шириной */}
+          {/* ВВОД */}
           <div className="p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d6a7]/20 to-transparent backdrop-blur-md">
             <form
               onSubmit={handleSubmit}
