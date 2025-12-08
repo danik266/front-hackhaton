@@ -28,39 +28,36 @@ function App() {
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isLoaded, setIsLoaded] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isSidebarOpen, setIsSidebarOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [theme, setTheme] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("light"); // "light" или "dark"
     const messagesEndRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "App.useEffect": ()=>{
-            setIsLoaded(true);
-        }
+        "App.useEffect": ()=>setIsLoaded(true)
     }["App.useEffect"], []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "App.useEffect": ()=>{
-            messagesEndRef.current?.scrollIntoView({
+        "App.useEffect": ()=>messagesEndRef.current?.scrollIntoView({
                 behavior: "smooth"
-            });
-        }
+            })
     }["App.useEffect"], [
         messages,
         loading
     ]);
-    // -------------------------
-    // ➤ СОЗДАТЬ НОВЫЙ ЧАТ
-    // -------------------------
     const deleteChat = (id)=>{
-        // если удаляем активный — переключаемся на первый оставшийся
+        if (id === 1) return;
         setChats((prev)=>{
             const updated = {
                 ...prev
             };
             delete updated[id];
             const remainingIds = Object.keys(updated);
-            const newActive = remainingIds.length > 0 ? Number(remainingIds[0]) : null;
-            setActiveChat(newActive);
+            setActiveChat(remainingIds.length > 0 ? Number(remainingIds[0]) : null);
             return updated;
         });
     };
     const createNewChat = ()=>{
+        if (chats[activeChat].messages.length === 0) {
+            alert("Сначала отправьте сообщение в текущий чат!");
+            return;
+        }
         const id_0 = Date.now();
         setChats((prev_0)=>({
                 ...prev_0,
@@ -71,15 +68,11 @@ function App() {
             }));
         setActiveChat(id_0);
     };
-    // -------------------------
-    // ➤ ОТПРАВКА СООБЩЕНИЙ
-    // -------------------------
     const handleSubmit = async (e)=>{
         e.preventDefault();
         if (!query.trim()) return;
         const userMessage = query.trim();
         setQuery("");
-        // Добавляем сообщение пользователя
         setChats((prev_1)=>({
                 ...prev_1,
                 [activeChat]: {
@@ -99,7 +92,6 @@ function App() {
             const response = await fetch(`http://localhost:8000/ask?query=${encodeURIComponent(userMessage)}`);
             if (!response.ok) throw new Error("Ошибка сервера");
             const result = await response.json();
-            // Добавляем ответ ассистента
             setChats((prev_3)=>({
                     ...prev_3,
                     [activeChat]: {
@@ -133,352 +125,419 @@ function App() {
             setLoading(false);
         }
     };
+    // ------------------------- Стили по теме -------------------------
+    const isLight = theme === "light";
+    const bgStyle = {
+        background: isLight ? "radial-gradient(circle at center, #d5d5d5ff 0%, #d5d5d5ff 20%, #c8e6c9 60%, #a5d6a7 100%)" : "radial-gradient(circle at center, #1b1b1b 0%, #121212 40%, #0c0f0c 100%)",
+        backgroundSize: "200% 200%",
+        animation: isLight ? "iridescentBreath 5s ease-in-out infinite" : "darkBreath 6s ease-in-out infinite"
+    };
+    const textColor = isLight ? "#1b5e20" : "#c8e6c9";
+    const sidebarBg = isLight ? "bg-white/40" : "bg-[#0f0f0f]/70";
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "jsx-915e81e316328a4b" + " " + "relative flex h-screen",
+        className: "jsx-fb9a93af63fa9c8d" + " " + "relative flex h-screen",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-915e81e316328a4b" + " " + "absolute inset-0 -z-10",
+                className: "jsx-fb9a93af63fa9c8d" + " " + "absolute inset-0 -z-10",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    style: {
-                        background: "radial-gradient(circle at center, #d5d5d5ff 0%, #d5d5d5ff 20%, #c8e6c9 60%, #a5d6a7 100%)",
-                        backgroundSize: "200% 200%",
-                        animation: "iridescentBreath 5s ease-in-out infinite"
-                    },
-                    className: "jsx-915e81e316328a4b" + " " + "w-full h-full"
+                    style: bgStyle,
+                    className: "jsx-fb9a93af63fa9c8d" + " " + "w-full h-full"
                 }, void 0, false, {
                     fileName: "[project]/app/page.jsx",
-                    lineNumber: 113,
+                    lineNumber: 112,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 112,
+                lineNumber: 111,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                id: "915e81e316328a4b",
-                children: "@keyframes iridescentBreath{0%,to{background-position:0%;background-size:150% 200%}25%{background-position:0 100%;background-size:170% 220%}50%{background-position:100%;background-size:150% 200%}75%{background-position:100% 0;background-size:170% 220%}}@keyframes fadeInUp{0%{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}.msg-animation.jsx-915e81e316328a4b{animation:.6s ease-out forwards fadeInUp}"
+                id: "fb9a93af63fa9c8d",
+                children: "@keyframes iridescentBreath{0%,to{background-position:0%;background-size:150% 200%}25%{background-position:0 100%;background-size:170% 220%}50%{background-position:100%;background-size:150% 200%}75%{background-position:100% 0;background-size:170% 220%}}@keyframes darkBreath{0%,to{background-position:0%;background-size:150% 200%}50%{background-position:100%;background-size:180% 230%}}@keyframes fadeInUp{0%{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}.msg-animation.jsx-fb9a93af63fa9c8d{animation:.6s ease-out forwards fadeInUp}"
             }, void 0, false, void 0, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-915e81e316328a4b" + " " + "flex h-full w-full relative",
+                className: "jsx-fb9a93af63fa9c8d" + " " + "flex h-full w-full relative",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
-                        className: "jsx-915e81e316328a4b" + " " + `
-            fixed inset-y-0 left-0 z-40 w-84 bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col gap-6 
-            transition-all duration-700 ease-in-out
-            ${isSidebarOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}
-            ${isLoaded ? "" : "-translate-x-20 opacity-0"}
-          `,
+                        style: {
+                            borderColor: isLight ? "transparent" : "#1f1f1f"
+                        },
+                        className: "jsx-fb9a93af63fa9c8d" + " " + `fixed inset-y-0 left-0 z-30 w-84 ${sidebarBg} backdrop-blur-xl border-r p-6 flex flex-col gap-4 transition-all duration-700`,
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                className: "jsx-915e81e316328a4b" + " " + "text-2xl font-bold text-[#1b5e20]",
+                                style: {
+                                    color: textColor
+                                },
+                                className: "jsx-fb9a93af63fa9c8d" + " " + `text-2xl font-bold`,
                                 children: "AI Pharmacist"
-                            }, void 0, false, {
-                                fileName: "[project]/app/page.jsx",
-                                lineNumber: 163,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                onClick: createNewChat,
-                                className: "jsx-915e81e316328a4b" + " " + "text-left text-[#1b5e20]/70 bg-white/30 backdrop-blur-xl px-5 py-3 rounded-2xl hover:bg-white/50 transition-all hover:scale-[1.02] border border-white/20",
-                                children: "+ Новый чат"
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
                                 lineNumber: 166,
                                 columnNumber: 11
                             }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: createNewChat,
+                                disabled: chats[activeChat].messages.length === 0,
+                                style: {
+                                    color: textColor,
+                                    borderColor: isLight ? "#ffffff33" : "#2a2a2a",
+                                    backgroundColor: isLight ? "rgba(255,255,255,0.3)" : "rgba(26,26,26,0.6)",
+                                    opacity: chats[activeChat].messages.length === 0 ? 0.4 : 1,
+                                    cursor: chats[activeChat].messages.length === 0 ? "not-allowed" : "pointer"
+                                },
+                                className: "jsx-fb9a93af63fa9c8d" + " " + `text-left px-5 py-3 rounded-2xl border transition-all`,
+                                children: "+ Новый чат"
+                            }, void 0, false, {
+                                fileName: "[project]/app/page.jsx",
+                                lineNumber: 172,
+                                columnNumber: 11
+                            }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-915e81e316328a4b" + " " + "space-y-3 overflow-y-auto pr-2",
+                                className: "jsx-fb9a93af63fa9c8d" + " " + "space-y-3 overflow-y-auto pr-2",
                                 children: Object.entries(chats).map(([id_1, chat])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-915e81e316328a4b" + " " + `
-      w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all group
-      ${Number(id_1) === activeChat ? "bg-white/60 text-[#1b5e20] font-semibold" : "bg-white/20 text-[#1b5e20]/70 hover:bg-white/40"}
-    `,
+                                        style: {
+                                            backgroundColor: Number(id_1) === activeChat ? isLight ? "#ffffff99" : "#1e1e1e" : isLight ? "#ffffff33" : "#141414",
+                                            color: Number(id_1) === activeChat ? textColor : isLight ? "#1b5e2070" : "#c8e6c980"
+                                        },
+                                        className: "jsx-fb9a93af63fa9c8d" + " " + `w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all group`,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 onClick: ()=>setActiveChat(Number(id_1)),
-                                                className: "jsx-915e81e316328a4b" + " " + "flex-1 text-left truncate",
+                                                className: "jsx-fb9a93af63fa9c8d" + " " + "flex-1 text-left truncate",
                                                 children: chat.title
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 176,
+                                                lineNumber: 187,
                                                 columnNumber: 17
                                             }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            Number(id_1) !== 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 onClick: ()=>deleteChat(Number(id_1)),
-                                                className: "jsx-915e81e316328a4b" + " " + "opacity-0 group-hover:opacity-100 ml-3 text-red-500 hover:text-red-700 transition",
+                                                className: "jsx-fb9a93af63fa9c8d" + " " + "opacity-0 group-hover:opacity-100 ml-3 text-red-500 hover:text-red-700",
                                                 children: "✕"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 181,
-                                                columnNumber: 17
+                                                lineNumber: 190,
+                                                columnNumber: 40
                                             }, this)
                                         ]
                                     }, id_1, true, {
                                         fileName: "[project]/app/page.jsx",
-                                        lineNumber: 172,
+                                        lineNumber: 183,
                                         columnNumber: 58
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
-                                lineNumber: 171,
+                                lineNumber: 182,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setTheme(theme === "light" ? "dark" : "light"),
+                                style: {
+                                    borderColor: textColor,
+                                    color: textColor,
+                                    backgroundColor: isLight ? "rgba(255,255,255,0.3)" : "rgba(26,26,26,0.6)"
+                                },
+                                className: "jsx-fb9a93af63fa9c8d" + " " + "mt-auto px-4 py-2 rounded-xl border transition-all",
+                                children: theme === "light" ? "Темная тема" : "Светлая тема"
+                            }, void 0, false, {
+                                fileName: "[project]/app/page.jsx",
+                                lineNumber: 197,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 157,
+                        lineNumber: 163,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: ()=>setIsSidebarOpen(!isSidebarOpen),
                         style: {
-                            transform: isSidebarOpen ? "translateX(336px)" : "translateX(0)"
+                            transform: isSidebarOpen ? "translateX(336px)" : "translateX(0)",
+                            borderColor: isLight ? "#ffffff33" : "#2a2a2a",
+                            backgroundColor: isLight ? "rgba(255,255,255,0.4)" : "rgba(26,26,26,0.7)"
                         },
-                        className: "jsx-915e81e316328a4b" + " " + "absolute left-0 top-6 z-50 bg-white/40 backdrop-blur-xl p-3 rounded-r-2xl shadow-xl border border-white/30 shadow-2xl hover:bg-white/60 transition-all",
+                        className: "jsx-fb9a93af63fa9c8d" + " " + "absolute left-0 top-6 z-50 bg-white/40 backdrop-blur-xl p-3 rounded-r-2xl border transition-all",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
                             fill: "none",
-                            stroke: "currentColor",
+                            stroke: textColor,
                             viewBox: "0 0 24 24",
-                            className: "jsx-915e81e316328a4b" + " " + `w-6 h-6 text-[#1b5e20] transition-transform ${isSidebarOpen ? "rotate-180" : ""}`,
+                            className: "jsx-fb9a93af63fa9c8d" + " " + `w-6 h-6 transition-transform ${isSidebarOpen ? "rotate-180" : ""}`,
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
                                 strokeLinecap: "round",
                                 strokeLinejoin: "round",
                                 strokeWidth: 2,
                                 d: "M15 19l-7-7 7-7",
-                                className: "jsx-915e81e316328a4b"
+                                className: "jsx-fb9a93af63fa9c8d"
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
-                                lineNumber: 193,
+                                lineNumber: 213,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/page.jsx",
-                            lineNumber: 192,
+                            lineNumber: 212,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 189,
+                        lineNumber: 207,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-915e81e316328a4b" + " " + `text-[#1b5e20]/70 flex-1 flex flex-col transition-all duration-700 ease-in-out overflow-hidden ${isSidebarOpen ? "ml-84" : "ml-0"}`,
+                        style: {
+                            marginLeft: isSidebarOpen ? 336 : 0
+                        },
+                        className: "jsx-fb9a93af63fa9c8d" + " " + `flex-1 flex flex-col transition-all duration-700`,
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-915e81e316328a4b" + " " + "flex-1 overflow-y-auto px-8 py-6",
+                                className: "jsx-fb9a93af63fa9c8d" + " " + "flex-1 overflow-y-auto px-8 py-6",
                                 children: messages.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "jsx-915e81e316328a4b" + " " + "h-full flex items-center justify-center",
+                                    className: "jsx-fb9a93af63fa9c8d" + " " + "h-full flex items-center justify-center",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-915e81e316328a4b" + " " + "text-center max-w-2xl mx-auto",
+                                        className: "jsx-fb9a93af63fa9c8d" + " " + "text-center max-w-2xl mx-auto",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                                className: "jsx-915e81e316328a4b" + " " + "text-4xl font-light text-[#1b5e20]/80 mb-4",
-                                                children: "Вас приветствует AI Pharmacist!"
+                                                style: {
+                                                    color: textColor
+                                                },
+                                                className: "jsx-fb9a93af63fa9c8d" + " " + "text-4xl font-light mb-4",
+                                                children: "Добро пожаловать в AI Pharmacist!"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 203,
+                                                lineNumber: 224,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "jsx-915e81e316328a4b" + " " + "text-lg text-[#1b5e20]/60",
-                                                children: "Задайте вопрос о лекарствах, их составе, взаимодействии или применении"
+                                                style: {
+                                                    color: isLight ? "#1b5e2070" : "#c8e6c980"
+                                                },
+                                                className: "jsx-fb9a93af63fa9c8d" + " " + "text-lg",
+                                                children: "Задайте вопрос о лекарствах, применении, составе или взаимодействии."
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 206,
+                                                lineNumber: 229,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/page.jsx",
-                                        lineNumber: 202,
+                                        lineNumber: 223,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.jsx",
-                                    lineNumber: 201,
+                                    lineNumber: 222,
                                     columnNumber: 38
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "jsx-915e81e316328a4b" + " " + `mx-auto space-y-8 transition-all duration-700 ease-in-out ${isSidebarOpen ? "max-w-3xl" : "max-w-5xl"}`,
+                                    className: "jsx-fb9a93af63fa9c8d" + " " + `mx-auto space-y-8 ${isSidebarOpen ? "max-w-3xl" : "max-w-5xl"}`,
                                     children: [
                                         messages.map((msg, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-915e81e316328a4b" + " " + `msg-animation flex ${msg.role === "user" ? "justify-end" : "justify-start"}`,
+                                                className: "jsx-fb9a93af63fa9c8d" + " " + `msg-animation flex ${msg.role === "user" ? "justify-end" : "justify-start"}`,
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     style: {
-                                                        maxWidth: "calc(100% - 2rem)"
+                                                        maxWidth: "calc(100% - 2rem)",
+                                                        backgroundColor: isLight ? msg.role === "user" ? "#e0f2f1" : "#ffffffaa" : msg.role === "user" ? "#1a1f1a" : "#1e1e1e",
+                                                        borderColor: isLight ? "#ffffff33" : "#2d332d",
+                                                        color: textColor
                                                     },
-                                                    className: "jsx-915e81e316328a4b" + " " + `px-7 py-5 rounded-3xl shadow-lg backdrop-blur-md border border-white/30 max-w-full`,
+                                                    className: "jsx-fb9a93af63fa9c8d" + " " + "px-7 py-5 rounded-3xl shadow-lg backdrop-blur-md border",
                                                     children: [
                                                         msg.role === "assistant" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "jsx-915e81e316328a4b" + " " + "text-sm font-semibold text-[#1b5e20]/70 mb-2",
-                                                            children: "AI Pharmacist"
+                                                            className: "jsx-fb9a93af63fa9c8d" + " " + "text-sm font-semibold mb-2",
+                                                            children: msg.role === "assistant" ? "AI Pharmacist" : ""
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/page.jsx",
-                                                            lineNumber: 216,
+                                                            lineNumber: 244,
                                                             columnNumber: 52
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "jsx-915e81e316328a4b" + " " + "text-lg leading-relaxed whitespace-pre-wrap",
+                                                            className: "jsx-fb9a93af63fa9c8d" + " " + "text-lg leading-relaxed whitespace-pre-wrap",
                                                             children: msg.content
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/page.jsx",
-                                                            lineNumber: 220,
+                                                            lineNumber: 247,
                                                             columnNumber: 23
                                                         }, this),
                                                         msg.sources && msg.sources.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "jsx-915e81e316328a4b" + " " + "mt-5 pt-5 border-t border-white/30",
+                                                            style: {
+                                                                borderColor: isLight ? "#ffffff33" : "#2e2e2e"
+                                                            },
+                                                            className: "jsx-fb9a93af63fa9c8d" + " " + "mt-5 pt-5 border-t",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                    className: "jsx-915e81e316328a4b" + " " + "text-sm font-medium text-[#1b5e20]/80 mb-3",
+                                                                    style: {
+                                                                        color: isLight ? "#1b5e20" : "#c8e6c980"
+                                                                    },
+                                                                    className: "jsx-fb9a93af63fa9c8d" + " " + "text-sm font-medium mb-3",
                                                                     children: "Источники:"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/page.jsx",
-                                                                    lineNumber: 225,
+                                                                    lineNumber: 253,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "jsx-915e81e316328a4b" + " " + "space-y-2",
+                                                                    className: "jsx-fb9a93af63fa9c8d" + " " + "space-y-2",
                                                                     children: msg.sources.map((src, idx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                                             href: src.url,
                                                                             target: "_blank",
                                                                             rel: "noopener noreferrer",
-                                                                            className: "jsx-915e81e316328a4b" + " " + "block text-sm text-blue-600 hover:text-blue-800 underline",
+                                                                            style: {
+                                                                                color: isLight ? "#1b5e20" : "#c8e6c9"
+                                                                            },
+                                                                            className: "jsx-fb9a93af63fa9c8d" + " " + "block text-sm underline",
                                                                             children: src.name
                                                                         }, idx, false, {
                                                                             fileName: "[project]/app/page.jsx",
-                                                                            lineNumber: 230,
+                                                                            lineNumber: 259,
                                                                             columnNumber: 60
                                                                         }, this))
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/page.jsx",
-                                                                    lineNumber: 229,
+                                                                    lineNumber: 258,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/page.jsx",
-                                                            lineNumber: 224,
+                                                            lineNumber: 250,
                                                             columnNumber: 65
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/page.jsx",
-                                                    lineNumber: 213,
+                                                    lineNumber: 238,
                                                     columnNumber: 21
                                                 }, this)
                                             }, i, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 212,
+                                                lineNumber: 237,
                                                 columnNumber: 43
                                             }, this)),
                                         loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "jsx-915e81e316328a4b" + " " + "flex justify-start",
+                                            className: "jsx-fb9a93af63fa9c8d" + " " + "flex justify-start",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-915e81e316328a4b" + " " + "shadow-xl text-[#1b5e20] px-7 py-5 rounded-3xl backdrop-blur-md border border-white/30",
+                                                style: {
+                                                    borderColor: isLight ? "#ffffff33" : "#2d332d",
+                                                    backgroundColor: isLight ? "#ffffffaa" : "#1a1f1a",
+                                                    color: textColor
+                                                },
+                                                className: "jsx-fb9a93af63fa9c8d" + " " + "shadow-xl px-7 py-5 rounded-3xl backdrop-blur-md border",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "jsx-915e81e316328a4b" + " " + "text-lg",
+                                                    className: "jsx-fb9a93af63fa9c8d" + " " + "text-lg",
                                                     children: "Загрузка..."
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.jsx",
-                                                    lineNumber: 240,
+                                                    lineNumber: 274,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 239,
+                                                lineNumber: 269,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.jsx",
-                                            lineNumber: 238,
+                                            lineNumber: 268,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             ref: messagesEndRef,
-                                            className: "jsx-915e81e316328a4b"
+                                            className: "jsx-fb9a93af63fa9c8d"
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.jsx",
-                                            lineNumber: 244,
+                                            lineNumber: 277,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/page.jsx",
-                                    lineNumber: 211,
+                                    lineNumber: 236,
                                     columnNumber: 24
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
-                                lineNumber: 200,
+                                lineNumber: 221,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-915e81e316328a4b" + " " + "p-6 bg-gradient-to-t from-[#a5d6a7]/60 via-[#a5d6a7]/20 to-transparent backdrop-blur-md",
+                                className: "jsx-fb9a93af63fa9c8d" + " " + "p-6 bg-gradient-to-t from-transparent via-transparent to-transparent backdrop-blur-md",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                                     onSubmit: handleSubmit,
-                                    className: "jsx-915e81e316328a4b" + " " + `mx-auto flex gap-4 transition-all duration-700 ease-in-out ${isSidebarOpen ? "max-w-3xl" : "max-w-5xl"}`,
+                                    className: "jsx-fb9a93af63fa9c8d" + " " + `mx-auto flex gap-4 ${isSidebarOpen ? "max-w-3xl" : "max-w-5xl"}`,
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                             type: "text",
                                             value: query,
                                             onChange: (e_0)=>setQuery(e_0.target.value),
-                                            placeholder: "Узнать у AI Pharmacist...",
+                                            placeholder: isLight ? "Узнать у AI Pharmacist..." : "Спросить AI Pharmacist...",
+                                            style: {
+                                                backgroundColor: isLight ? "rgba(255,255,255,0.3)" : "rgba(26,26,26,0.7)",
+                                                color: textColor,
+                                                borderColor: isLight ? "#ffffff33" : "#2a2a2a",
+                                                placeholderColor: isLight ? "#1b5e2070" : "#c8e6c980"
+                                            },
                                             disabled: loading,
-                                            className: "jsx-915e81e316328a4b" + " " + "text-[#1b5e20] flex-1 bg-white/30 backdrop-blur-xl px-7 py-5 rounded-3xl outline-none text-lg placeholder-[#1b5e20]/50 border border-white/40 focus:border-white/70 transition-all shadow-2xl"
+                                            className: "jsx-fb9a93af63fa9c8d" + " " + "flex-1 px-7 py-5 rounded-3xl outline-none text-lg placeholder-opacity-50 border shadow-xl"
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.jsx",
-                                            lineNumber: 251,
+                                            lineNumber: 284,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             type: "submit",
                                             disabled: loading || !query.trim(),
-                                            className: "jsx-915e81e316328a4b" + " " + "bg-white/40 backdrop-blur-xl p-5 rounded-full hover:bg-white/60 transition-all hover:scale-110 disabled:opacity-40 disabled:cursor-not-allowed shadow-xl border border-white/30",
+                                            style: {
+                                                backgroundColor: isLight ? "rgba(255,255,255,0.4)" : "rgba(26,26,26,0.7)",
+                                                borderColor: isLight ? "#ffffff33" : "#2a2a2a"
+                                            },
+                                            className: "jsx-fb9a93af63fa9c8d" + " " + "p-5 rounded-full border shadow-xl transition-all hover:scale-110",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                                 src: "/free-icon-send-button-12439325 (1).png",
                                                 alt: "Отправить",
-                                                className: "jsx-915e81e316328a4b" + " " + "w-8 h-8 brightness-0 opacity-80"
+                                                className: "jsx-fb9a93af63fa9c8d" + " " + `w-8 h-8 ${isLight ? "" : "invert brightness-150"}`
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.jsx",
-                                                lineNumber: 253,
+                                                lineNumber: 294,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.jsx",
-                                            lineNumber: 252,
+                                            lineNumber: 290,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/page.jsx",
-                                    lineNumber: 250,
+                                    lineNumber: 283,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.jsx",
-                                lineNumber: 249,
+                                lineNumber: 282,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 198,
+                        lineNumber: 218,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 155,
+                lineNumber: 161,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.jsx",
-        lineNumber: 110,
+        lineNumber: 109,
         columnNumber: 10
     }, this);
 }
-_s(App, "ych1fqbgC4pqRl9a5Lj1nbrlbj0=");
+_s(App, "gj8vPocfn17XwohnR2Z8IxdXk0c=");
 _c = App;
 var _c;
 __turbopack_context__.k.register(_c, "App");

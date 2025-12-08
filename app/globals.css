@@ -40,3 +40,46 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #1b5e20cc;
 }
+  @keyframes iridescentBreath {
+          0%,
+          100% {
+            background-size: 150% 200%;
+            background-position: 0% 50%;
+          }
+          25% {
+            background-size: 170% 220%;
+            background-position: 0% 100%;
+          }
+          50% {
+            background-size: 150% 200%;
+            background-position: 100% 50%;
+          }
+          75% {
+            background-size: 170% 220%;
+            background-position: 100% 0%;
+          }
+        }
+        @keyframes darkBreath {
+          0%,
+          100% {
+            background-size: 150% 200%;
+            background-position: 0% 50%;
+          }
+          50% {
+            background-size: 180% 230%;
+            background-position: 100% 50%;
+          }
+        }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .msg-animation {
+          animation: fadeInUp 0.6s ease-out forwards;
+        }

@@ -1,7 +1,7 @@
 (globalThis.TURBOPACK_CHUNK_LISTS || (globalThis.TURBOPACK_CHUNK_LISTS = [])).push({
     script: typeof document === "object" ? document.currentScript : undefined,
     chunks: [
-  "static/chunks/hackhaton-devfest_frontend_ea23df74._.js"
+  "static/chunks/hackhaton-devfest_frontend_72d40560._.js"
 ],
     source: "dynamic"
 });
