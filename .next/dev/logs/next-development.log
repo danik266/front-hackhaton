@@ -1,28 +1,29 @@
-[00:00:00.872] Server  LOG      ✓ Ready in 539ms
-[00:00:03.890] Server  LOG      ○ Compiling / ...
-[00:00:06.559] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:47.609] Server  LOG      ✓ Compiled in 30ms
-[00:02:48.401] Browser ERROR   ./hackhaton-devfest/frontend/app/page.jsx:335:22
-Parsing ecmascript source code failed
-  333 | </div>
-  334 |
-> 335 |                     )}
-      |                      ^
-  336 |                   </div>
-  337 |                 </div>
-  338 |               ))}
-
-Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-
-Import traces:
-  Client Component Browser:
-    ./hackhaton-devfest/frontend/app/page.jsx [Client Component Browser]
-    ./hackhaton-devfest/frontend/app/page.jsx [Server Component]
-
-  Client Component SSR:
-    ./hackhaton-devfest/frontend/app/page.jsx [Client Component SSR]
-    ./hackhaton-devfest/frontend/app/page.jsx [Server Component]
-[00:03:26.435] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:03:51.206] Server  LOG      ✓ Compiled in 78ms
-[00:03:55.095] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:04:11.657] Server  LOG      ✓ Compiled in 57ms
+[00:00:01.606] Server  LOG      ✓ Ready in 1186ms
+[00:00:06.605] Server  LOG      ○ Compiling / ...
+[00:00:07.135] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:31.861] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:07:22.664] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:00.543] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:14:32.140] Browser ERROR   uncaughtError: Error: Objects are not valid as a React child (found: object with keys {parts, role}). If you meant to render a collection of children, use an array instead.
+[00:14:35.654] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:14:46.775] Browser ERROR   uncaughtError: Error: Objects are not valid as a React child (found: object with keys {parts, role}). If you meant to render a collection of children, use an array instead.
+[00:16:40.415] Server  LOG      ✓ Compiled in 105ms
+[00:16:40.422] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:16:40.633] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:16:55.603] Server  LOG      ✓ Compiled in 69ms
+[00:16:57.797] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:16:58.374] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:18:12.179] Server  LOG      ✓ Compiled in 62ms
+[00:18:27.216] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:19:00.322] Server  LOG      ✓ Compiled in 96ms
+[00:19:13.499] Server  LOG      ✓ Compiled in 61ms
+[00:19:17.693] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:19:23.618] Browser ERROR   uncaughtError: ReferenceError: result is not defined
+[00:19:27.743] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:19:31.174] Browser ERROR   uncaughtError: ReferenceError: result is not defined
+[00:19:37.219] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:19:37.337] Server  LOG      ✓ Compiled in 53ms
+[00:19:37.448] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:19:53.529] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:21:32.576] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:22:24.106] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
