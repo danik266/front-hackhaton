@@ -143,25 +143,22 @@ export default function App() {
         </h1>
 
         <button
-          onClick={createNewChat}
-          disabled={!activeChat || chats[activeChat]?.messages.length === 0}
-          className="text-left px-5 py-3 rounded-2xl border transition-all"
-          style={{
-            color: textColor,
-            borderColor: isLight ? "#ffffff33" : "#2a2a2a",
-            backgroundColor: isLight
-              ? "rgba(255,255,255,0.3)"
-              : "rgba(26,26,26,0.6)",
-            opacity:
-              !activeChat || chats[activeChat]?.messages.length === 0 ? 0.4 : 1,
-            cursor:
-              !activeChat || chats[activeChat]?.messages.length === 0
-                ? "not-allowed"
-                : "pointer",
-          }}
-        >
-          + Новый чат
-        </button>
+  onClick={createNewChat}
+  disabled={!activeChat || chats[activeChat]?.messages.length === 0}
+  className={`text-left px-5 py-3 rounded-2xl border transition-all duration-300 ease-in-out
+    ${!activeChat || chats[activeChat]?.messages.length === 0 ? "opacity-40 cursor-not-allowed" : "hover:scale-105 hover:shadow-lg active:scale-95"}
+  `}
+  style={{
+    color: textColor,
+    borderColor: isLight ? "#ffffff33" : "#2a2a2a",
+    backgroundColor: isLight
+      ? "rgba(255,255,255,0.3)"
+      : "rgba(26,26,26,0.6)",
+  }}
+>
+  + Новый чат
+</button>
+
 
         <div className="space-y-3 overflow-y-auto pr-2">
           {Object.entries(chats).map(([id, chat]) => (
@@ -355,8 +352,6 @@ export default function App() {
             </div>
           )}
         </div>
-
-        {/* ВВОД */}
         <div className="p-6 bg-gradient-to-t from-transparent via-transparent to-transparent backdrop-blur-md">
           <form
             onSubmit={handleSubmit}
@@ -365,26 +360,21 @@ export default function App() {
             }`}
           >
             <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={
-                isLight
-                  ? "Узнать у AI Pharmacist..."
-                  : "Спросить AI Pharmacist..."
-              }
-              className={`flex-1 px-7 py-5 rounded-3xl outline-none text-lg border shadow-xl placeholder-opacity-50 ${
-                isLight ? "placeholder-green-900" : "placeholder-green-200"
-              }`}
-              style={{
-                backgroundColor: isLight
-                  ? "rgba(255,255,255,0.3)"
-                  : "rgba(26,26,26,0.7)",
-                color: textColor,
-                borderColor: isLight ? "#ffffff33" : "#2a2a2a",
-              }}
-              disabled={loading}
-            />
+  type="text"
+  value={query}
+  onChange={(e) => setQuery(e.target.value)}
+  placeholder={isLight ? "Узнать у AI Pharmacist..." : "Спросить AI Pharmacist..."}
+  className={`flex-1 px-7 py-5 rounded-3xl outline-none text-lg border shadow-xl placeholder-opacity-50 transition-all duration-200 hover:shadow-2xl hover:scale-[1.01]`}
+  style={{
+    backgroundColor: isLight
+      ? "rgba(255,255,255,0.3)"
+      : "rgba(26,26,26,0.7)",
+    color: textColor,
+    borderColor: isLight ? "#ffffff33" : "#2a2a2a",
+  }}
+  disabled={loading}
+/>
+
             <button
               type="submit"
               disabled={loading || !query.trim()}

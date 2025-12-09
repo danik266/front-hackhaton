@@ -2,5 +2,5 @@
   "version": 3,
   "sources": [],
   "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/danik/hackhaton-devfest/frontend/app/favicon.ico.mjs%20%28structured%20image%20object%29"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 256, height: 256 }\n"],"names":[],"mappings":";;;;AAAA;;uCACe;IAAE,KAAA,uKAAG;IAAE,OAAO;IAAK,QAAQ;AAAI"}}]
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/danik/hackhaton-devfest/frontend/app/favicon.ico.mjs%20%28structured%20image%20object%29"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 256, height: 134 }\n"],"names":[],"mappings":";;;;AAAA;;uCACe;IAAE,KAAA,uKAAG;IAAE,OAAO;IAAK,QAAQ;AAAI"}}]
 }
